@@ -1,6 +1,6 @@
 # Risorizer
 
-Effect plug-in for adding a Risograph-like effect on your shapes
+Effect plug-in for the Glyphs.app font editor for adding a Risograph-like effect on your shapes.
 
 ![Risorizer](Risorizer.png)
 
