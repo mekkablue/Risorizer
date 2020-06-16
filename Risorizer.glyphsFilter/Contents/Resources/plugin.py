@@ -20,14 +20,15 @@ from GlyphsApp import *
 from GlyphsApp.plugins import *
 from Foundation import NSClassFromString
 from AppKit import NSAffineTransform, NSAffineTransformStruct
+from math import pi, cos, sin
 
 import random
 
 def buildTriangle(position=NSPoint(0,0), averageSize=20, variance=0.5):
 	path = GSPath()
 	for i in range(random.randrange(3,6)):
-		x = position.x + averageSize*(1+random.gauss(0,variance)) - averageSize*0.5
-		y = position.y + averageSize*(1+random.gauss(0,variance)) - averageSize*0.5
+		x = position.x + cos( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0,variance) )
+		y = position.y + sin( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0,variance) )
 		path.nodes.append(GSNode((x,y)))
 	path.closed = True
 	return path
