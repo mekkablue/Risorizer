@@ -157,36 +157,75 @@ class Risorizer(FilterWithDialog):
 	# Actual filter
 	@objc.python_method
 	def filter(self, layer, inEditView, customParameters):
-		# fallback:
-		size = 15
-		density = 2
-		inset = 15
-		variance = 0.5
+		if layer.parent.name != ".notdef":
+			try:
+				# fallback:
+				size = 15
+				density = 2
+				inset = 15
+				variance = 0.5
 		
-		if not inEditView:
-			# Called on font export, get value from customParameters
-			if "size" in customParameters:
-				size = customParameters['size']
-			if "density" in customParameters:
-				density = customParameters['density']
-			if "inset" in customParameters:
-				inset = customParameters['inset']
-			if "variance" in customParameters:
-				variance = customParameters['variance']
-		else:
-			# Called through UI, use stored value
-			size = float(Glyphs.defaults['com.mekkablue.Risorizer.size'])
-			density = float(Glyphs.defaults['com.mekkablue.Risorizer.density'])
-			inset = float(Glyphs.defaults['com.mekkablue.Risorizer.inset'])
-			variance = float(Glyphs.defaults['com.mekkablue.Risorizer.variance'])
+				if not inEditView:
+					# Called on font export, get value from customParameters
+					if "size" in customParameters:
+						size = float( customParameters['size'] )
+					if "density" in customParameters:
+						density = float( customParameters['density'] )
+					if "inset" in customParameters:
+						inset = float( customParameters['inset'] )
+					if "variance" in customParameters:
+						variance = float( customParameters['variance'] )
+				
+				else:
+					# Called through UI, use stored values:
+					try:
+						sizePref = Glyphs.defaults['com.mekkablue.Risorizer.size']
+						size = float(sizePref)
+					except:
+						self.logToConsole("Risorizer in %s: Could not retrieve float value for size (%s)" % (layer.parent.name, sizePref))
+				
+					try:
+						densityPref = Glyphs.defaults['com.mekkablue.Risorizer.density']
+						density = float(densityPref)
+					except:
+						self.logToConsole("Risorizer in %s: Could not retrieve float value for density (%s)" % (layer.parent.name, densityPref))
+				
+					try:
+						insetPref = Glyphs.defaults['com.mekkablue.Risorizer.inset']
+						inset = float(insetPref)
+					except:
+						self.logToConsole("Risorizer in %s: Could not retrieve float value for inset (%s)" % (layer.parent.name, insetPref))
+				
+					try:
+						variancePref = Glyphs.defaults['com.mekkablue.Risorizer.variance']
+						variance = float(variancePref)
+					except:
+						self.logToConsole("Risorizer in %s: Could not retrieve float value for variance (%s)" % (layer.parent.name, variancePref))
+				
 		
-		layerCopy = layer.copyDecomposedLayer()
-		layerCopy.removeOverlap()
-		layerCopy.correctPathDirection()
-		offsetLayer( layerCopy, -2*inset )
-		newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).paths
-		layer.paths.extend(newPaths)
-		layer.correctPathDirection()
+				layerCopy = layer.copyDecomposedLayer()
+				layerCopy.removeOverlap()
+				layerCopy.correctPathDirection()
+				offsetLayer( layerCopy, -2*inset )
+				try:
+					# GLYPHS 3
+					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).shapes
+					if newPaths:
+						layer.shapes.extend(newPaths)
+				except:
+					# GLYPHS 2
+					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).paths
+					if newPaths:
+						layer.paths.extend(newPaths)
+				layer.correctPathDirection()
+			except Exception as e:
+				import traceback
+				if inEditView:
+					print("\nRisorizer Error:")
+					print(traceback.format_exc())
+					print(e)
+				else:
+					self.logToConsole( "Risorizer Error: %s\n%s" % (str(e), traceback.format_exc()) )
 
 	@objc.python_method
 	def generateCustomParameter( self ):
