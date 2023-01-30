@@ -37,10 +37,16 @@ def spotsForLayer(layer, density=0.002, size=15, variance=0.5):
 	dirtLayer = GSLayer()
 	layerArea = layer.bezierPath
 	
-	bottom = layer.bounds.origin.y
-	height = layer.bounds.size.height
-	left = layer.bounds.origin.x
-	width = layer.bounds.size.width
+	if Glyphs.versionNumber == 3.2:
+		bottom = layer.fastBounds().origin.y
+		height = layer.fastBounds().size.height
+		left = layer.fastBounds().origin.x
+		width = layer.fastBounds().size.width
+	else:
+		bottom = layer.bounds.origin.y
+		height = layer.bounds.size.height
+		left = layer.bounds.origin.x
+		width = layer.bounds.size.width
 	# top = bottom + height
 	# right = left + width
 	
