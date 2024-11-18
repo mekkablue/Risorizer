@@ -218,7 +218,7 @@ class Risorizer(FilterWithDialog):
 					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).shapes
 					if newPaths:
 						for newPath in newPaths:
-							Layer.shapes.append(newPath)
+							layer.shapes.append(newPath)
 				except:
 					# GLYPHS 2
 					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).paths
