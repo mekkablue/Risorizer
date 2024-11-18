@@ -19,7 +19,7 @@ import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 from Foundation import NSClassFromString
-from AppKit import NSAffineTransform, NSAffineTransformStruct
+from AppKit import NSAffineTransform, NSAffineTransformStruct, NSPoint, NSView
 from math import pi, cos, sin
 
 import random
@@ -38,10 +38,10 @@ def spotsForLayer(layer, density=0.002, size=15, variance=0.5):
 	layerArea = layer.bezierPath
 	
 	if Glyphs.versionNumber == 3.2:
-		bottom = layer.fastBounds().origin.y
-		height = layer.fastBounds().size.height
-		left = layer.fastBounds().origin.x
-		width = layer.fastBounds().size.width
+		bottom = layer.bounds.origin.y
+		height = layer.bounds.size.height
+		left = layer.bounds.origin.x
+		width = layer.bounds.size.width
 	else:
 		bottom = layer.bounds.origin.y
 		height = layer.bounds.size.height
@@ -217,7 +217,8 @@ class Risorizer(FilterWithDialog):
 					# GLYPHS 3
 					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).shapes
 					if newPaths:
-						layer.shapes.extend(newPaths)
+						for newPath in newPaths:
+							Layer.shapes.append(newPath)
 				except:
 					# GLYPHS 2
 					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).paths
