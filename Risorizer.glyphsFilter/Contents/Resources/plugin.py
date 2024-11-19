@@ -27,8 +27,8 @@ import random
 def buildTriangle(position=NSPoint(0,0), averageSize=20, variance=0.5):
 	path = GSPath()
 	for i in range(random.randrange(3,6)):
-		x = position.x + cos( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0,variance) )
-		y = position.y + sin( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0,variance) )
+		x = position.x + cos( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0, variance) )
+		y = position.y + sin( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0, variance) )
 		path.nodes.append(GSNode((x,y)))
 	path.closed = True
 	return path
@@ -52,9 +52,10 @@ def spotsForLayer(layer, density=0.002, size=15, variance=0.5):
 	
 	count = int(width*height*density)
 	virtualArea = dirtLayer.bezierPath
+	
 	for i in range(count):
-		x = left+width*random.random()
-		y = bottom+height*random.random()
+		x = left + width * random.random()
+		y = bottom + height * random.random()
 		randomPos = NSPoint(x,y)
 		if layerArea.containsPoint_(randomPos):
 			if not virtualArea or (virtualArea and not virtualArea.containsPoint_(randomPos)):
@@ -208,22 +209,23 @@ class Risorizer(FilterWithDialog):
 					except:
 						self.logToConsole("Risorizer in %s: Could not retrieve float value for variance (%s)" % (layer.parent.name, variancePref))
 				
-		
 				layerCopy = layer.copyDecomposedLayer()
 				layerCopy.removeOverlap()
 				layerCopy.correctPathDirection()
 				offsetLayer( layerCopy, -2*inset )
-				try:
+				if Glyphs.versionNumber >= 3:
 					# GLYPHS 3
-					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).shapes
+					
+					newPaths = spotsForLayer(layer, density*0.0001, size, variance).shapes
 					if newPaths:
 						for newPath in newPaths:
 							layer.shapes.append(newPath)
-				except:
+				else:
 					# GLYPHS 2
 					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).paths
 					if newPaths:
 						layer.paths.extend(newPaths)
+				
 				layer.correctPathDirection()
 			except Exception as e:
 				import traceback
