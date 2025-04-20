@@ -20,51 +20,83 @@ from GlyphsApp import *
 from GlyphsApp.plugins import *
 from Foundation import NSClassFromString
 from AppKit import NSAffineTransform, NSAffineTransformStruct, NSPoint, NSView
-from math import pi, cos, sin
+from math import pi, cos, sin, atan2
 
 import random
 
+
+def trianglePoints(initialPoint, side=30, variance=0.4):
+	# Calculate the minimum and maximum side lengths
+	min_side = side - side * variance
+	max_side = side + side * variance
+
+	# Generate the second point
+	angle = random.uniform(0, 2 * pi)
+	x2 = initialPoint.x + random.uniform(min_side, max_side) * cos(angle)
+	y2 = initialPoint.y + random.uniform(min_side, max_side) * sin(angle)
+
+	# Calculate the angle between the first and second points
+	angle12 = atan2(y2 - initialPoint.y, x2 - initialPoint.x)
+
+	# Generate the third point
+	angle23 = angle12 + random.uniform(pi / 3 - pi / 6, pi / 3 + pi / 6)  # 60 degrees +/- 30 degrees
+	distance23 = random.uniform(min_side, max_side)
+	x3 = x2 + distance23 * cos(angle23)
+	y3 = y2 + distance23 * sin(angle23)
+
+	# Check if the points make a counter-clockwise turn
+	cross_product = (x2 - initialPoint.x) * (y3 - initialPoint.y) - (y2 - initialPoint.y) * (x3 - initialPoint.x)
+	if cross_product < 0:
+		# If not, swap the second and third points
+		x2, x3 = x3, x2
+		y2, y3 = y3, y2
+
+	return [initialPoint, NSPoint(x2, y2), NSPoint(x3, y3)]
+
+
 def buildTriangle(position=NSPoint(0,0), averageSize=20, variance=0.5):
 	path = GSPath()
-	for i in range(random.randrange(3,6)):
-		x = position.x + cos( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0, variance) )
-		y = position.y + sin( 2*pi*random.random() ) * averageSize * ( 1+random.gauss(0, variance) )
-		path.nodes.append(GSNode((x,y)))
+	for newPosition in trianglePoints(position, side=averageSize, variance=variance):
+		newNode = GSNode()
+		newNode.position = newPosition
+		path.nodes.append(newNode)
 	path.closed = True
 	return path
 
+
 def spotsForLayer(layer, density=0.002, size=15, variance=0.5):
-	dirtLayer = GSLayer()
 	layerArea = layer.bezierPath
-	
-	if Glyphs.versionNumber == 3.2:
-		bottom = layer.bounds.origin.y
-		height = layer.bounds.size.height
-		left = layer.bounds.origin.x
-		width = layer.bounds.size.width
-	else:
-		bottom = layer.bounds.origin.y
-		height = layer.bounds.size.height
-		left = layer.bounds.origin.x
-		width = layer.bounds.size.width
-	# top = bottom + height
-	# right = left + width
-	
+
+	layerBounds = layer.fastBounds()
+	bottom = layerBounds.origin.y
+	height = layerBounds.size.height
+	left = layerBounds.origin.x
+	width = layerBounds.size.width
+
 	count = int(width*height*density)
-	virtualArea = dirtLayer.bezierPath
+
+	dirtLayer = GSLayer()
 	
 	for i in range(count):
 		x = left + width * random.random()
 		y = bottom + height * random.random()
-		randomPos = NSPoint(x,y)
+		randomPos = NSPoint(x, y)
+		
 		if layerArea.containsPoint_(randomPos):
-			if not virtualArea or (virtualArea and not virtualArea.containsPoint_(randomPos)):
+			virtualArea = dirtLayer.bezierPath
+			if virtualArea is None or not virtualArea.containsPoint_(randomPos):
 				triangle = buildTriangle(position=randomPos, averageSize=size, variance=variance)
 				if triangle:
-					dirtLayer.paths.append(triangle)
+					if Glyphs.versionNumber >= 3:
+						# GLYPHS 3
+						dirtLayer.shapes.append(triangle)
+					else:
+						# GLYPHS 2
+						dirtLayer.paths.append(triangle)
 	
 	dirtLayer.removeOverlap()
 	return dirtLayer
+
 
 def offsetLayer(thisLayer, offset, makeStroke=False, position=0.5, autoStroke=False):
 	offsetFilter = NSClassFromString("GlyphsFilterOffsetCurve")
@@ -86,6 +118,7 @@ def offsetLayer(thisLayer, offset, makeStroke=False, position=0.5, autoStroke=Fa
 			autoStroke,     # if True, distorts resulting shape to vertical metrics
 			position,       # stroke distribution to the left and right, 0.5 = middle
 			None, None )
+
 
 class Risorizer(FilterWithDialog):
 
@@ -213,12 +246,12 @@ class Risorizer(FilterWithDialog):
 				layerCopy.removeOverlap()
 				layerCopy.correctPathDirection()
 				offsetLayer(layerCopy, -2*inset)
+				
 				if Glyphs.versionNumber >= 3:
 					# GLYPHS 3
 					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).shapes
-					if newPaths:
-						for newPath in newPaths:
-							layer.shapes.append(newPath)
+					for newPath in newPaths:
+						layer.shapes.append(newPath)
 				else:
 					# GLYPHS 2
 					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).paths
@@ -233,7 +266,8 @@ class Risorizer(FilterWithDialog):
 					print(traceback.format_exc())
 					print(e)
 				else:
-					self.logToConsole( "Risorizer Error: %s\n%s" % (str(e), traceback.format_exc()) )
+					self.logToConsole("Risorizer Error: %s\n%s" % (str(e), traceback.format_exc()) )
+
 
 	@objc.python_method
 	def generateCustomParameter( self ):
@@ -244,6 +278,7 @@ class Risorizer(FilterWithDialog):
 			Glyphs.defaults['com.mekkablue.Risorizer.inset'],
 			Glyphs.defaults['com.mekkablue.Risorizer.variance'],
 			)
+
 
 	@objc.python_method
 	def __file__(self):
