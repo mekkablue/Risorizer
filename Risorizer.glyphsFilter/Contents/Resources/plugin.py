@@ -66,9 +66,9 @@ def spotsForLayer(layer, density=0.002, size=15, variance=0.5):
 	dirtLayer.removeOverlap()
 	return dirtLayer
 
-def offsetLayer( thisLayer, offset, makeStroke=False, position=0.5, autoStroke=False ):
+def offsetLayer(thisLayer, offset, makeStroke=False, position=0.5, autoStroke=False):
 	offsetFilter = NSClassFromString("GlyphsFilterOffsetCurve")
-	try:
+	if Glyphs.versionNumber >= 3:
 		# GLYPHS 3:	
 		offsetFilter.offsetLayer_offsetX_offsetY_makeStroke_autoStroke_position_metrics_error_shadow_capStyleStart_capStyleEnd_keepCompatibleOutlines_(
 			thisLayer,
@@ -77,7 +77,7 @@ def offsetLayer( thisLayer, offset, makeStroke=False, position=0.5, autoStroke=F
 			autoStroke,     # if True, distorts resulting shape to vertical metrics
 			position,       # stroke distribution to the left and right, 0.5 = middle
 			None, None, None, 0, 0, False )
-	except:
+	else:
 		# GLYPHS 2:
 		offsetFilter.offsetLayer_offsetX_offsetY_makeStroke_autoStroke_position_error_shadow_(
 			thisLayer,
@@ -212,11 +212,10 @@ class Risorizer(FilterWithDialog):
 				layerCopy = layer.copyDecomposedLayer()
 				layerCopy.removeOverlap()
 				layerCopy.correctPathDirection()
-				offsetLayer( layerCopy, -2*inset )
+				offsetLayer(layerCopy, -2*inset)
 				if Glyphs.versionNumber >= 3:
 					# GLYPHS 3
-					
-					newPaths = spotsForLayer(layer, density*0.0001, size, variance).shapes
+					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).shapes
 					if newPaths:
 						for newPath in newPaths:
 							layer.shapes.append(newPath)
