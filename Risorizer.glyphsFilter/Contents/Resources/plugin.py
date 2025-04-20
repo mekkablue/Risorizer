@@ -20,9 +20,8 @@ from GlyphsApp import *
 from GlyphsApp.plugins import *
 from Foundation import NSClassFromString
 from AppKit import NSAffineTransform, NSAffineTransformStruct, NSPoint, NSView
-from math import pi, cos, sin, atan2
-
-import random
+from math import pi, cos, sin, atan2, sqrt, log, exp
+from random import uniform, random
 
 
 def trianglePoints(initialPoint, side=30, variance=0.4):
@@ -31,16 +30,16 @@ def trianglePoints(initialPoint, side=30, variance=0.4):
 	max_side = side + side * variance
 
 	# Generate the second point
-	angle = random.uniform(0, 2 * pi)
-	x2 = initialPoint.x + random.uniform(min_side, max_side) * cos(angle)
-	y2 = initialPoint.y + random.uniform(min_side, max_side) * sin(angle)
+	angle = uniform(0, 2 * pi)
+	x2 = initialPoint.x + uniform(min_side, max_side) * cos(angle)
+	y2 = initialPoint.y + uniform(min_side, max_side) * sin(angle)
 
 	# Calculate the angle between the first and second points
 	angle12 = atan2(y2 - initialPoint.y, x2 - initialPoint.x)
 
 	# Generate the third point
-	angle23 = angle12 + random.uniform(pi / 3 - pi / 6, pi / 3 + pi / 6)  # 60 degrees +/- 30 degrees
-	distance23 = random.uniform(min_side, max_side)
+	angle23 = angle12 + uniform(pi / 3 - pi / 6, pi / 3 + pi / 6)  # 60 degrees +/- 30 degrees
+	distance23 = uniform(min_side, max_side)
 	x3 = x2 + distance23 * cos(angle23)
 	y3 = y2 + distance23 * sin(angle23)
 
@@ -51,7 +50,7 @@ def trianglePoints(initialPoint, side=30, variance=0.4):
 		x2, x3 = x3, x2
 		y2, y3 = y3, y2
 
-	return [initialPoint, NSPoint(x2, y2), NSPoint(x3, y3)]
+	return (initialPoint, NSPoint(x2, y2), NSPoint(x3, y3))
 
 
 def buildTriangle(position=NSPoint(0,0), averageSize=20, variance=0.5):
@@ -64,35 +63,113 @@ def buildTriangle(position=NSPoint(0,0), averageSize=20, variance=0.5):
 	return path
 
 
-def spotsForLayer(layer, density=0.002, size=15, variance=0.5):
+def distanceBetweenPoints(point1, point2):
+	return ((point2.x - point1.x) ** 2 + (point2.y - point1.y) ** 2) ** 0.5
+
+
+def allowedByDistribution(distribute, randomPos, initialSpark, measure=1000):
+	if distribute == 0:
+		return True
+	
+	# 1: Gauss
+	# 2: Uniform
+	# 3: Exponential
+	# 4: Smooth
+
+	def probForDistanceGauss(d, m=1000):
+		if d >= m:
+			return 0
+		else:
+			sigma = m / sqrt(-2 * log(0.01))
+			return exp(-d**2 / (2 * sigma**2))
+
+	def probForDistanceUniform(d, m=1000):
+		if d >= m:
+			return 0
+		else:
+			return 1 - d / m
+
+	def probForDistanceExponential(d, m=1000):
+		if d >= m:
+			return 0
+		else:
+			lambda_val = -log(0.01) / m
+			return exp(-lambda_val * d)
+
+	def probForDistanceSmooth(d, m=1000):
+		if d >= m:
+			return 0
+		else:
+			return (1 - (d / m) ** 0.5) ** 2
+	
+	distance = distanceBetweenPoints(initialSpark, randomPos)
+	randomNumber = random()
+	if distribute == 1:
+		return randomNumber <= probForDistanceGauss(distance, measure)
+	elif distribute == 2:
+		return randomNumber <= probForDistanceUniform(distance, measure)
+	elif distribute == 3:
+		return randomNumber <= probForDistanceExponential(distance, measure)
+	elif distribute == 4:
+		return randomNumber <= probForDistanceSmooth(distance, measure)
+	
+	# if all else fails:
+	return True
+
+	
+
+def spotsForLayer(layer, density=0.002, size=15, variance=0.5, distribution=0):
+	print("SPOTS", layer, density, size, variance, distribution)
+	
 	layerArea = layer.bezierPath
 
-	layerBounds = layer.fastBounds()
+	layerBounds = layer.fastBounds() # bug in Glyphs 3 does not allow layer.bounds
 	bottom = layerBounds.origin.y
 	height = layerBounds.size.height
 	left = layerBounds.origin.x
 	width = layerBounds.size.width
+	diagonal = (width**2 + height**2) ** 0.5
 
-	count = int(width*height*density)
+	count = int(width * height * density)
+	if distribution > 0:
+		count *= 2
+	
+	initialSpark = NSPoint(
+		left + width * random(),
+		bottom + height * random(),
+		)
+	
+	print("SPARK", initialSpark, count)
 
 	dirtLayer = GSLayer()
-	
+	addedShapes = 0
 	for i in range(count):
-		x = left + width * random.random()
-		y = bottom + height * random.random()
+		x = left + width * random()
+		y = bottom + height * random()
 		randomPos = NSPoint(x, y)
 		
-		if layerArea.containsPoint_(randomPos):
-			virtualArea = dirtLayer.bezierPath
-			if virtualArea is None or not virtualArea.containsPoint_(randomPos):
-				triangle = buildTriangle(position=randomPos, averageSize=size, variance=variance)
-				if triangle:
-					if Glyphs.versionNumber >= 3:
-						# GLYPHS 3
-						dirtLayer.shapes.append(triangle)
-					else:
-						# GLYPHS 2
-						dirtLayer.paths.append(triangle)
+		if not layerArea.containsPoint_(randomPos):
+			continue
+
+		virtualArea = dirtLayer.bezierPath
+		if virtualArea is not None:
+			if virtualArea.containsPoint_(randomPos):
+				continue
+
+		if not allowedByDistribution(distribution, randomPos, initialSpark, measure=diagonal):
+			continue
+
+		triangle = buildTriangle(position=randomPos, averageSize=size, variance=variance)
+		if triangle:
+			if Glyphs.versionNumber >= 3:
+				# GLYPHS 3
+				dirtLayer.shapes.append(triangle)
+				addedShapes += 1
+			else:
+				# GLYPHS 2
+				dirtLayer.paths.append(triangle)
+	
+	print("ITERATION", len(dirtLayer.shapes), "=", addedShapes)
 	
 	dirtLayer.removeOverlap()
 	return dirtLayer
@@ -130,6 +207,20 @@ class Risorizer(FilterWithDialog):
 	densityField = objc.IBOutlet()
 	sizeField = objc.IBOutlet()
 	varianceField = objc.IBOutlet()
+	distributeField = objc.IBOutlet()
+
+
+	@objc.python_method
+	def prefName(self, name):
+		return "com.mekkablue.Risorizer." + name.strip()
+
+
+	@objc.python_method
+	def getPref(self, name):
+		prefURL = self.prefName(name)
+		pref = Glyphs.defaults[prefURL]
+		return pref
+
 
 	@objc.python_method
 	def settings(self):
@@ -155,43 +246,51 @@ class Risorizer(FilterWithDialog):
 		# Load dialog from .nib (without .extension)
 		self.loadNib('IBdialog', __file__)
 
+
 	# On dialog show
 	@objc.python_method
 	def start(self):
 		
 		# Set default value
-		Glyphs.registerDefault('com.mekkablue.Risorizer.size', 15.0)
-		Glyphs.registerDefault('com.mekkablue.Risorizer.density', 2)
-		Glyphs.registerDefault('com.mekkablue.Risorizer.inset', 15.0)
-		Glyphs.registerDefault('com.mekkablue.Risorizer.variance', 0.5)
+		Glyphs.registerDefault(self.prefName('size'), 15.0)
+		Glyphs.registerDefault(self.prefName('density'), 2)
+		Glyphs.registerDefault(self.prefName('inset'), 15.0)
+		Glyphs.registerDefault(self.prefName('variance'), 0.5)
+		Glyphs.registerDefault(self.prefName('distribute'), 0)
 		
 		# Set value of text field
-		self.insetField.setStringValue_(Glyphs.defaults['com.mekkablue.Risorizer.inset'])
-		self.densityField.setStringValue_(Glyphs.defaults['com.mekkablue.Risorizer.density'])
-		self.sizeField.setStringValue_(Glyphs.defaults['com.mekkablue.Risorizer.size'])
-		self.varianceField.setValue_(float(Glyphs.defaults['com.mekkablue.Risorizer.variance']))
+		self.insetField.setStringValue_(self.getPref('inset'))
+		self.densityField.setStringValue_(self.getPref('density'))
+		self.sizeField.setStringValue_(self.getPref('size'))
+		self.varianceField.setValue_(float(self.getPref('variance')))
+		self.distributeField.selectItemAtIndex_(int(self.getPref('distribute')))
 		
 		# Set focus to text field
 		self.insetField.becomeFirstResponder()
 
 	@objc.IBAction
-	def setInset_( self, sender ):
-		Glyphs.defaults['com.mekkablue.Risorizer.inset'] = sender.floatValue()
+	def setInset_(self, sender):
+		Glyphs.defaults[self.prefName('inset')] = sender.floatValue()
 		self.update()
 
 	@objc.IBAction
-	def setDensity_( self, sender ):
-		Glyphs.defaults['com.mekkablue.Risorizer.density'] = sender.floatValue()
+	def setDensity_(self, sender):
+		Glyphs.defaults[self.prefName('density')] = sender.floatValue()
 		self.update()
 
 	@objc.IBAction
-	def setSize_( self, sender ):
-		Glyphs.defaults['com.mekkablue.Risorizer.size'] = sender.floatValue()
+	def setSize_(self, sender):
+		Glyphs.defaults[self.prefName('size')] = sender.floatValue()
 		self.update()
 
 	@objc.IBAction
-	def setVariance_( self, sender ):
-		Glyphs.defaults['com.mekkablue.Risorizer.variance'] = sender.floatValue()
+	def setVariance_(self, sender):
+		Glyphs.defaults[self.prefName('variance')] = sender.floatValue()
+		self.update()
+
+	@objc.IBAction
+	def setDistribute_(self, sender):
+		Glyphs.defaults[self.prefName('distribute')] = sender.indexOfSelectedItem()
 		self.update()
 
 	# Actual filter
@@ -204,6 +303,7 @@ class Risorizer(FilterWithDialog):
 				density = 2
 				inset = 15
 				variance = 0.5
+				distribute = 0
 		
 				if not inEditView:
 					# Called on font export, get value from customParameters
@@ -215,49 +315,59 @@ class Risorizer(FilterWithDialog):
 						inset = float( customParameters['inset'] )
 					if "variance" in customParameters:
 						variance = float( customParameters['variance'] )
+					if "distribute" in customParameters:
+						distribute = int( customParameters['distribute'] )
 				
 				else:
 					# Called through UI, use stored values:
 					try:
-						sizePref = Glyphs.defaults['com.mekkablue.Risorizer.size']
+						sizePref = self.getPref('size')
 						size = float(sizePref)
 					except:
 						self.logToConsole("Risorizer in %s: Could not retrieve float value for size (%s)" % (layer.parent.name, sizePref))
 				
 					try:
-						densityPref = Glyphs.defaults['com.mekkablue.Risorizer.density']
+						densityPref = self.getPref('density')
 						density = float(densityPref)
 					except:
 						self.logToConsole("Risorizer in %s: Could not retrieve float value for density (%s)" % (layer.parent.name, densityPref))
 				
 					try:
-						insetPref = Glyphs.defaults['com.mekkablue.Risorizer.inset']
+						insetPref = self.getPref('inset')
 						inset = float(insetPref)
 					except:
 						self.logToConsole("Risorizer in %s: Could not retrieve float value for inset (%s)" % (layer.parent.name, insetPref))
 				
 					try:
-						variancePref = Glyphs.defaults['com.mekkablue.Risorizer.variance']
+						variancePref = self.getPref('variance')
 						variance = float(variancePref)
 					except:
 						self.logToConsole("Risorizer in %s: Could not retrieve float value for variance (%s)" % (layer.parent.name, variancePref))
-				
+
+					try:
+						distributePref = self.getPref('distribute')
+						distribute = int(distributePref)
+					except:
+						self.logToConsole("Risorizer in %s: Could not retrieve int value for variance (%s)" % (layer.parent.name, distributePref))
+
+				layer.removeOverlap()
 				layerCopy = layer.copyDecomposedLayer()
-				layerCopy.removeOverlap()
 				layerCopy.correctPathDirection()
 				offsetLayer(layerCopy, -2*inset)
 				
 				if Glyphs.versionNumber >= 3:
 					# GLYPHS 3
-					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).shapes
+					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance, distribution=distribute).shapes
 					for newPath in newPaths:
 						layer.shapes.append(newPath)
 				else:
 					# GLYPHS 2
-					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance).paths
+					newPaths = spotsForLayer(layerCopy, density*0.0001, size, variance, distribution=distribute).paths
 					if newPaths:
 						layer.paths.extend(newPaths)
 				
+				layer.roundCoordinates()
+				layer.cleanUpPaths()
 				layer.correctPathDirection()
 			except Exception as e:
 				import traceback
@@ -273,10 +383,10 @@ class Risorizer(FilterWithDialog):
 	def generateCustomParameter( self ):
 		return "%s; size:%s; density:%s; inset:%s; variance:%s" % (
 			self.__class__.__name__, 
-			Glyphs.defaults['com.mekkablue.Risorizer.size'],
-			Glyphs.defaults['com.mekkablue.Risorizer.density'],
-			Glyphs.defaults['com.mekkablue.Risorizer.inset'],
-			Glyphs.defaults['com.mekkablue.Risorizer.variance'],
+			self.getPref('size'),
+			self.getPref('density'),
+			self.getPref('inset'),
+			self.getPref('variance'),
 			)
 
 
