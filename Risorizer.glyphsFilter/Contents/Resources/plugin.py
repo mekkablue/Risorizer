@@ -381,12 +381,13 @@ class Risorizer(FilterWithDialog):
 
 	@objc.python_method
 	def generateCustomParameter( self ):
-		return "%s; size:%s; density:%s; inset:%s; variance:%s" % (
+		return "%s; size:%s; density:%s; inset:%s; variance:%s; distribute:%s" % (
 			self.__class__.__name__, 
 			self.getPref('size'),
 			self.getPref('density'),
 			self.getPref('inset'),
 			self.getPref('variance'),
+			self.getPref('distribute'),
 			)
 
 
