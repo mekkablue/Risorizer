@@ -1,0 +1,57 @@
+//
+//  Risorizer.h
+//  Risorizer-Cocoa
+//
+//  Native Objective-C + Interface Builder version of the Risorizer glyphsFilter.
+//  Adds random triangular debris/spots to glyph outlines (Risograph-like effect).
+//
+//  Based on the Python plugin by Rainer Erich Scheichelbauer (mekkablue).
+//  ObjC port: see GlyphsSDK Filter Plugin template and mekkablue/GreenHarmony2.
+//
+
+#import <Cocoa/Cocoa.h>
+#import <GlyphsCore/GlyphsFilterPlugin.h>
+#import <GlyphsCore/GSLayer.h>
+#import <GlyphsCore/GSPath.h>
+#import <GlyphsCore/GSNode.h>
+#import <GlyphsCore/GSGlyph.h>
+#import <GlyphsCore/GSFont.h>
+#import <GlyphsCore/GSFontMaster.h>
+
+@interface Risorizer : GSFilterPlugin {
+    // Dialog controls
+    IBOutlet NSTextField   *insetField;
+    IBOutlet NSTextField   *densityField;
+    IBOutlet NSTextField   *sizeField;
+    IBOutlet NSSlider      *varianceField;
+    IBOutlet NSPopUpButton *distributeField;
+
+    // Current parameter values
+    CGFloat   _inset;
+    CGFloat   _density;
+    CGFloat   _size;
+    CGFloat   _variance;
+    NSInteger _distribute;
+}
+
+@property (unsafe_unretained) IBOutlet NSTextField   *insetField;
+@property (unsafe_unretained) IBOutlet NSTextField   *densityField;
+@property (unsafe_unretained) IBOutlet NSTextField   *sizeField;
+@property (unsafe_unretained) IBOutlet NSSlider      *varianceField;
+@property (unsafe_unretained) IBOutlet NSPopUpButton *distributeField;
+
+- (IBAction)setInset:(id)sender;
+- (IBAction)setDensity:(id)sender;
+- (IBAction)setSize:(id)sender;
+- (IBAction)setVariance:(id)sender;
+- (IBAction)setDistribute:(id)sender;
+
+/// Apply the filter to a single layer.
+- (void)processLayer:(GSLayer *)layer
+               inset:(CGFloat)inset
+             density:(CGFloat)density
+                size:(CGFloat)size
+            variance:(CGFloat)variance
+          distribute:(NSInteger)distribute;
+
+@end

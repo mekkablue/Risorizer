@@ -1,0 +1,10 @@
+//
+//  Risorizer-Cocoa-Prefix.pch
+//  Prefix header for the Risorizer-Cocoa target.
+//
+//  Imported into every source file automatically via GCC_PREFIX_HEADER.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
