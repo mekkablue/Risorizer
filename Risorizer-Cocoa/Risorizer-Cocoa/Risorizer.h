@@ -39,6 +39,12 @@
 - (IBAction)setVariance:(id)sender;
 - (IBAction)setDistribute:(id)sender;
 
+/// Returns the Custom Parameter string for pasting into Font Info → Custom Parameters.
+- (NSString *)generateCustomParameter;
+
+/// Returns the PreFilter Custom Parameter string (same value, different parameter name).
+- (NSString *)generateCustomPreFilterParameter;
+
 /// Apply the filter to a single layer.
 - (void)processLayer:(GSLayer *)layer
                inset:(CGFloat)inset

@@ -394,6 +394,19 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 }
 
 // ---------------------------------------------------------------------------
+// Actions menu — "Copy Custom Parameter"
+
+- (NSString *)generateCustomParameter {
+    return [NSString stringWithFormat:
+            @"Risorizer; inset:%g; density:%g; size:%g; variance:%g; distribute:%ld",
+            _inset, _density, _size, _variance, (long)_distribute];
+}
+
+- (NSString *)generateCustomPreFilterParameter {
+    return [self generateCustomParameter];
+}
+
+// ---------------------------------------------------------------------------
 // Batch-export entry point (called via Custom Parameter)
 //
 // Custom Parameter syntax:
