@@ -16,8 +16,26 @@
 #import <GlyphsCore/GSLayer.h>
 #import <GlyphsCore/GSPath.h>
 #import <GlyphsCore/GSNode.h>
+#import <GlyphsCore/GSCallbackHandler.h>
 
 #import <math.h>
+
+// Forward-declare the class method on GlyphsFilterOffsetCurve so the compiler
+// knows the selector when we call it via NSClassFromString.
+@interface NSObject (GlyphsFilterOffsetCurve)
++ (void)offsetLayer:(GSLayer *)layer
+             offsetX:(CGFloat)offsetX
+             offsetY:(CGFloat)offsetY
+          makeStroke:(BOOL)makeStroke
+          autoStroke:(BOOL)autoStroke
+            position:(CGFloat)position
+             metrics:(id)metrics
+               error:(id)error
+              shadow:(id)shadow
+       capStyleStart:(NSUInteger)capStyleStart
+         capStyleEnd:(NSUInteger)capStyleEnd
+keepCompatibleOutlines:(BOOL)keepCompatibleOutlines;
+@end
 
 // ---------------------------------------------------------------------------
 // Preference keys
@@ -195,11 +213,11 @@ static GSLayer *RisorizerSpotsForLayer(GSLayer   *sourceLayer,
 
         GSPath *triangle = RisorizerBuildTriangle(randomPos, size, variance);
         if (triangle) {
-            [dirtLayer.shapes addObject:triangle];
+            [dirtLayer addShape:triangle];
         }
     }
 
-    [dirtLayer removeOverlap];
+    [dirtLayer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
     return dirtLayer;
 }
 
@@ -341,7 +359,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
         // Restore selection
         layer.selection = [NSMutableArray array];
-        if (checkSelection && shadowLayer.selection.count > 0) {
+        if (_checkSelection && shadowLayer.selection.count > 0) {
             for (NSUInteger i = 0; i < shadowLayer.shapes.count; i++) {
                 GSPath *shadowPath = (GSPath *)shadowLayer.shapes[i];
                 GSPath *layerPath  = (GSPath *)layer.shapes[i];
@@ -396,12 +414,12 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         else if ([key isEqualToString:@"distribute"]) distribute = (NSInteger)val;
     }
 
-    checkSelection = NO;
+    _checkSelection = NO;
     NSString *masterId = font.fontMasters.firstObject.id;
 
     // Optional glyph-list filtering from arguments
     BOOL include = NO;
-    NSSet *glyphNames = getIncludeExcludeGlyphList(arguments, &include);
+    NSSet *glyphNames = getIncludeExcludeGlyphListFilter(arguments, &include, font, nil);
 
     for (GSGlyph *glyph in font.glyphs) {
         if ([glyph.name isEqualToString:@".notdef"]) continue;
@@ -434,7 +452,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
     @try {
         // 1. Remove overlap on original layer
-        [layer removeOverlap];
+        [layer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
 
         // 2. Work on an inset copy to avoid placing spots outside the outline
         GSLayer *workLayer = [layer copyDecomposedLayer];
@@ -451,8 +469,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         if (!spotLayer) return;
 
         // 4. Add spots to the original layer
-        for (id shape in spotLayer.shapes) {
-            [layer.shapes addObject:shape];
+        for (GSShape *shape in spotLayer.shapes) {
+            [layer addShape:shape];
         }
 
         // 5. Clean up

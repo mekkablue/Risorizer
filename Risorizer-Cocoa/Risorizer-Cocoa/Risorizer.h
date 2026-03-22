@@ -19,13 +19,6 @@
 #import <GlyphsCore/GSFontMaster.h>
 
 @interface Risorizer : GSFilterPlugin {
-    // Dialog controls
-    IBOutlet NSTextField   *insetField;
-    IBOutlet NSTextField   *densityField;
-    IBOutlet NSTextField   *sizeField;
-    IBOutlet NSSlider      *varianceField;
-    IBOutlet NSPopUpButton *distributeField;
-
     // Current parameter values
     CGFloat   _inset;
     CGFloat   _density;
@@ -34,11 +27,11 @@
     NSInteger _distribute;
 }
 
-@property (unsafe_unretained) IBOutlet NSTextField   *insetField;
-@property (unsafe_unretained) IBOutlet NSTextField   *densityField;
-@property (unsafe_unretained) IBOutlet NSTextField   *sizeField;
-@property (unsafe_unretained) IBOutlet NSSlider      *varianceField;
-@property (unsafe_unretained) IBOutlet NSPopUpButton *distributeField;
+@property (weak) IBOutlet NSTextField   *insetField;
+@property (weak) IBOutlet NSTextField   *densityField;
+@property (weak) IBOutlet NSTextField   *sizeField;
+@property (weak) IBOutlet NSSlider      *varianceField;
+@property (weak) IBOutlet NSPopUpButton *distributeField;
 
 - (IBAction)setInset:(id)sender;
 - (IBAction)setDensity:(id)sender;

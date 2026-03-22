@@ -3,21 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11111111111111111111001A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110015 /* Cocoa.framework */; };
-		11111111111111111111001B /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110016 /* GlyphsCore.framework */; };
 		111111111111111111110018 /* Risorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110011 /* Risorizer.m */; };
 		111111111111111111110019 /* IBdialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110012 /* IBdialog.xib */; };
+		11111111111111111111001A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110015 /* Cocoa.framework */; };
+		11111111111111111111001B /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110016 /* GlyphsCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		111111111111111111110010 /* Risorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Risorizer.h"; sourceTree = "<group>"; };
-		111111111111111111110011 /* Risorizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Risorizer.m"; sourceTree = "<group>"; };
-		111111111111111111110012 /* IBdialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "IBdialog.xib"; sourceTree = "<group>"; };
-		111111111111111111110013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		111111111111111111110010 /* Risorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Risorizer.h; sourceTree = "<group>"; };
+		111111111111111111110011 /* Risorizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Risorizer.m; sourceTree = "<group>"; };
+		111111111111111111110012 /* IBdialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IBdialog.xib; sourceTree = "<group>"; };
+		111111111111111111110013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		111111111111111111110014 /* Risorizer-Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Risorizer-Cocoa-Prefix.pch"; sourceTree = "<group>"; };
 		111111111111111111110015 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		111111111111111111110016 /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = "/Applications/Glyphs 3.app/Contents/Frameworks/GlyphsCore.framework"; sourceTree = "<absolute>"; };
@@ -37,7 +37,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		11111111111111111111000C /* MainGroup */ = {
+		11111111111111111111000C = {
 			isa = PBXGroup;
 			children = (
 				11111111111111111111000F /* Risorizer-Cocoa */,
@@ -234,12 +234,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Applications/Glyphs 3.app/Contents/Frameworks",
+					"\"/Applications/Glyphs 3.app/Contents/Frameworks\"",
 				);
 				GCC_PREFIX_HEADER = "Risorizer-Cocoa/Risorizer-Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Risorizer-Cocoa/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.Risorizer";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Risorizer;
 				PRODUCT_NAME = Risorizer;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = glyphsFilter;
@@ -253,12 +253,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Applications/Glyphs 3.app/Contents/Frameworks",
+					"\"/Applications/Glyphs 3.app/Contents/Frameworks\"",
 				);
 				GCC_PREFIX_HEADER = "Risorizer-Cocoa/Risorizer-Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Risorizer-Cocoa/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.Risorizer";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Risorizer;
 				PRODUCT_NAME = Risorizer;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = glyphsFilter;
@@ -287,7 +287,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = 111111111111111111110001 /* Project object */;
 }
