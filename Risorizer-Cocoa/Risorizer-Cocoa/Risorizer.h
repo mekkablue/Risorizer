@@ -10,7 +10,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <GlyphsCore/GlyphsFilterPlugin.h>
+#import <GlyphsCore/GSFilterPlugin.h>
 #import <GlyphsCore/GSLayer.h>
 #import <GlyphsCore/GSPath.h>
 #import <GlyphsCore/GSNode.h>
