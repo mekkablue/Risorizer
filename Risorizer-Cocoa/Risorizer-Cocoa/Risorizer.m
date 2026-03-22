@@ -252,6 +252,16 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 @synthesize insetField, densityField, sizeField, varianceField, distributeField;
 
 // ---------------------------------------------------------------------------
+// Plugin lifecycle
+
+- (void)loadPlugin {
+    // Load the dialog NIB; sets the "view" outlet (→ _view) that the
+    // framework checks to decide whether to show the filter dialog.
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    [bundle loadNibNamed:@"Risorizer" owner:self topLevelObjects:nil];
+}
+
+// ---------------------------------------------------------------------------
 // GSFilterPlugin identity
 
 - (NSUInteger)interfaceVersion {
@@ -274,6 +284,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 // Setup (called when dialog opens; restore saved values into UI)
 
 - (NSError *)setup {
+    [super setup];
+
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
     // Register defaults
@@ -298,6 +310,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
     [varianceField setFloatValue:(float)_variance];
     [distributeField selectItemAtIndex:_distribute];
 
+    [self process:nil];
     return nil;
 }
 
@@ -347,7 +360,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                                                     copyItems:YES] mutableCopy];
 
         // Restore selection
-        layer.selection = [NSMutableArray array];
+        layer.selection = [NSOrderedSet orderedSet];
         if (_checkSelection && shadowLayer.selection.count > 0) {
             for (NSUInteger i = 0; i < shadowLayer.shapes.count; i++) {
                 GSPath *shadowPath = (GSPath *)shadowLayer.shapes[i];
@@ -374,16 +387,10 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 }
 
 // ---------------------------------------------------------------------------
-// Required GlyphsFilter protocol method — called when the user clicks "Apply"
+// GlyphsFilter protocol — delegate to super so the dialog is always shown.
 
 - (BOOL)runFilterWithLayer:(GSLayer *)layer error:(out NSError **)error {
-    [self processLayer:layer
-                 inset:_inset
-               density:_density
-                  size:_size
-              variance:_variance
-            distribute:_distribute];
-    return YES;
+    return [super runFilterWithLayer:layer error:error];
 }
 
 // ---------------------------------------------------------------------------
@@ -470,12 +477,22 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                                                     distribute);
         if (!spotLayer) return;
 
-        // 4. Add spots to the original layer
+        // 4. Clean up spots: correct direction, remove overlap, then reverse
+        //    so they act as counter-shapes when added to the main outline.
+        [spotLayer correctPathDirection];
+        [spotLayer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
+        for (GSShape *shape in spotLayer.shapes) {
+            if ([shape isKindOfClass:[GSPath class]]) {
+                [(GSPath *)shape reverse];
+            }
+        }
+
+        // 5. Add reversed spots to the original layer
         for (GSShape *shape in spotLayer.shapes) {
             [layer addShape:shape];
         }
 
-        // 5. Clean up
+        // 6. Clean up
         [layer roundCoordinates];
         [layer cleanUpPaths];
         [layer correctPathDirection];
