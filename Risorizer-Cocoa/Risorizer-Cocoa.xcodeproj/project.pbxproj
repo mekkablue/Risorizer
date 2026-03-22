@@ -7,111 +7,109 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA00000000000000000000F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000D /* Cocoa.framework */; };
-		AA000000000000000000010 /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000E /* GlyphsCore.framework */; };
+		11111111111111111111001A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110015 /* Cocoa.framework */; };
+		11111111111111111111001B /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110016 /* GlyphsCore.framework */; };
+		111111111111111111110018 /* Risorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110011 /* Risorizer.m */; };
+		111111111111111111110019 /* IBdialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110012 /* IBdialog.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA00000000000000000000D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		AA00000000000000000000E /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = GlyphsCore.framework; sourceTree = "<group>"; };
-		AA000000000000000000011 /* Risorizer.glyphsFilter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Risorizer.glyphsFilter; sourceTree = BUILT_PRODUCTS_DIR; };
+		111111111111111111110010 /* Risorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Risorizer.h"; sourceTree = "<group>"; };
+		111111111111111111110011 /* Risorizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Risorizer.m"; sourceTree = "<group>"; };
+		111111111111111111110012 /* IBdialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "IBdialog.xib"; sourceTree = "<group>"; };
+		111111111111111111110013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		111111111111111111110014 /* Risorizer-Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Risorizer-Cocoa-Prefix.pch"; sourceTree = "<group>"; };
+		111111111111111111110015 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		111111111111111111110016 /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = "/Applications/Glyphs 3.app/Contents/Frameworks/GlyphsCore.framework"; sourceTree = "<absolute>"; };
+		111111111111111111110017 /* Risorizer.glyphsFilter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Risorizer.glyphsFilter; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		AA000000000000000000013 /* Risorizer-Cocoa */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				{
-					isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-					membershipExceptions = (
-						"Info.plist",
-						"Risorizer-Cocoa-Prefix.pch",
-					);
-					target = AA000000000000000000002 /* Risorizer-Cocoa */;
-				},
-			);
-			path = "Risorizer-Cocoa";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		AA00000000000000000000A /* Frameworks */ = {
+		11111111111111111111000A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000000F /* Cocoa.framework in Frameworks */,
-				AA000000000000000000010 /* GlyphsCore.framework in Frameworks */,
+				11111111111111111111001A /* Cocoa.framework in Frameworks */,
+				11111111111111111111001B /* GlyphsCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA000000000000000000012 /* MainGroup */ = {
+		11111111111111111111000C /* MainGroup */ = {
 			isa = PBXGroup;
 			children = (
-				AA000000000000000000013 /* Risorizer-Cocoa */,
-				AA000000000000000000014 /* Products */,
-				AA000000000000000000015 /* Frameworks */,
+				11111111111111111111000F /* Risorizer-Cocoa */,
+				11111111111111111111000D /* Products */,
+				11111111111111111111000E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		AA000000000000000000014 /* Products */ = {
+		11111111111111111111000D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA000000000000000000011 /* Risorizer.glyphsFilter */,
+				111111111111111111110017 /* Risorizer.glyphsFilter */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AA000000000000000000015 /* Frameworks */ = {
+		11111111111111111111000E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA00000000000000000000D /* Cocoa.framework */,
-				AA00000000000000000000E /* GlyphsCore.framework */,
+				111111111111111111110015 /* Cocoa.framework */,
+				111111111111111111110016 /* GlyphsCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		11111111111111111111000F /* Risorizer-Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				111111111111111111110010 /* Risorizer.h */,
+				111111111111111111110011 /* Risorizer.m */,
+				111111111111111111110012 /* IBdialog.xib */,
+				111111111111111111110013 /* Info.plist */,
+				111111111111111111110014 /* Risorizer-Cocoa-Prefix.pch */,
+			);
+			path = "Risorizer-Cocoa";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AA000000000000000000002 /* Risorizer-Cocoa */ = {
+		111111111111111111110002 /* Risorizer-Cocoa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA000000000000000000008 /* Build configuration list for PBXNativeTarget "Risorizer-Cocoa" */;
+			buildConfigurationList = 111111111111111111110008 /* Build configuration list for PBXNativeTarget "Risorizer-Cocoa" */;
 			buildPhases = (
-				AA000000000000000000009 /* Sources */,
-				AA00000000000000000000A /* Frameworks */,
-				AA00000000000000000000B /* Resources */,
+				111111111111111111110009 /* Sources */,
+				11111111111111111111000A /* Frameworks */,
+				11111111111111111111000B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				AA000000000000000000013,
-			);
 			name = "Risorizer-Cocoa";
 			productName = Risorizer;
-			productReference = AA000000000000000000011 /* Risorizer.glyphsFilter */;
+			productReference = 111111111111111111110017 /* Risorizer.glyphsFilter */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		AA000000000000000000001 /* Project object */ = {
+		111111111111111111110001 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					AA000000000000000000002 = {
+					111111111111111111110002 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = AA000000000000000000005 /* Build configuration list for PBXProject "Risorizer-Cocoa" */;
+			buildConfigurationList = 111111111111111111110005 /* Build configuration list for PBXProject "Risorizer-Cocoa" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -119,72 +117,61 @@
 				en,
 				Base,
 			);
-			mainGroup = AA000000000000000000012;
-			productRefGroup = AA000000000000000000014 /* Products */;
+			mainGroup = 11111111111111111111000C;
+			productRefGroup = 11111111111111111111000D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA000000000000000000002 /* Risorizer-Cocoa */,
+				111111111111111111110002 /* Risorizer-Cocoa */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		AA00000000000000000000B /* Resources */ = {
+		11111111111111111111000B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				111111111111111111110019 /* IBdialog.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		AA000000000000000000009 /* Sources */ = {
+		111111111111111111110009 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				111111111111111111110018 /* Risorizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		AA000000000000000000003 /* Debug */ = {
+		111111111111111111110003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_RETURN_VALUE = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -200,48 +187,33 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		AA000000000000000000004 /* Release */ = {
+		111111111111111111110004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_RETURN_VALUE = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -251,15 +223,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		AA000000000000000000006 /* Debug */ = {
+		111111111111111111110006 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "";
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -269,17 +239,16 @@
 				GCC_PREFIX_HEADER = "Risorizer-Cocoa/Risorizer-Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Risorizer-Cocoa/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Risorizer;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.Risorizer";
 				PRODUCT_NAME = Risorizer;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = glyphsFilter;
 			};
 			name = Debug;
 		};
-		AA000000000000000000007 /* Release */ = {
+		111111111111111111110007 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "";
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -289,7 +258,7 @@
 				GCC_PREFIX_HEADER = "Risorizer-Cocoa/Risorizer-Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Risorizer-Cocoa/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Risorizer;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.Risorizer";
 				PRODUCT_NAME = Risorizer;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = glyphsFilter;
@@ -299,20 +268,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AA000000000000000000005 /* Build configuration list for PBXProject "Risorizer-Cocoa" */ = {
+		111111111111111111110005 /* Build configuration list for PBXProject "Risorizer-Cocoa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA000000000000000000003 /* Debug */,
-				AA000000000000000000004 /* Release */,
+				111111111111111111110003 /* Debug */,
+				111111111111111111110004 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA000000000000000000008 /* Build configuration list for PBXNativeTarget "Risorizer-Cocoa" */ = {
+		111111111111111111110008 /* Build configuration list for PBXNativeTarget "Risorizer-Cocoa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA000000000000000000006 /* Debug */,
-				AA000000000000000000007 /* Release */,
+				111111111111111111110006 /* Debug */,
+				111111111111111111110007 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -320,5 +289,5 @@
 /* End XCConfigurationList section */
 
 	};
-	rootObject = AA000000000000000000001 /* Project object */;
+	rootObject = 111111111111111111110001 /* Project object */;
 }
