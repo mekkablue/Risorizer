@@ -217,7 +217,6 @@ static GSLayer *RisorizerSpotsForLayer(GSLayer   *sourceLayer,
         }
     }
 
-    [dirtLayer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
     return dirtLayer;
 }
 
