@@ -280,6 +280,12 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
     return nil;
 }
 
+- (NSString *)customParameterString {
+    return [NSString stringWithFormat:
+            @"Risorizer; inset:%g; density:%g; size:%g; variance:%g; distribute:%ld",
+            _inset, _density, _size, _variance, (long)_distribute];
+}
+
 // ---------------------------------------------------------------------------
 // Setup (called when dialog opens; restore saved values into UI)
 
