@@ -251,16 +251,6 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
 @synthesize insetField, densityField, sizeField, varianceField, distributeField;
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        // Load dialog NIB from plugin bundle resources
-        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-        [bundle loadNibNamed:@"IBdialog" owner:self topLevelObjects:nil];
-    }
-    return self;
-}
-
 // ---------------------------------------------------------------------------
 // GSFilterPlugin identity
 
@@ -381,6 +371,19 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         [layer clearSelection];
     }
     [super process:nil];
+}
+
+// ---------------------------------------------------------------------------
+// Required GlyphsFilter protocol method — called when the user clicks "Apply"
+
+- (BOOL)runFilterWithLayer:(GSLayer *)layer error:(out NSError **)error {
+    [self processLayer:layer
+                 inset:_inset
+               density:_density
+                  size:_size
+              variance:_variance
+            distribute:_distribute];
+    return YES;
 }
 
 // ---------------------------------------------------------------------------

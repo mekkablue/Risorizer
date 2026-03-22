@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		111111111111111111110018 /* Risorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110011 /* Risorizer.m */; };
-		111111111111111111110019 /* IBdialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110012 /* IBdialog.xib */; };
+		111111111111111111110019 /* Risorizer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110012 /* Risorizer.xib */; };
 		11111111111111111111001A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110015 /* Cocoa.framework */; };
 		11111111111111111111001B /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110016 /* GlyphsCore.framework */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		111111111111111111110010 /* Risorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Risorizer.h; sourceTree = "<group>"; };
 		111111111111111111110011 /* Risorizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Risorizer.m; sourceTree = "<group>"; };
-		111111111111111111110012 /* IBdialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IBdialog.xib; sourceTree = "<group>"; };
+		111111111111111111110012 /* Risorizer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Risorizer.xib; sourceTree = "<group>"; };
 		111111111111111111110013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		111111111111111111110014 /* Risorizer-Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Risorizer-Cocoa-Prefix.pch"; sourceTree = "<group>"; };
 		111111111111111111110015 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -68,7 +68,7 @@
 			children = (
 				111111111111111111110010 /* Risorizer.h */,
 				111111111111111111110011 /* Risorizer.m */,
-				111111111111111111110012 /* IBdialog.xib */,
+				111111111111111111110012 /* Risorizer.xib */,
 				111111111111111111110013 /* Info.plist */,
 				111111111111111111110014 /* Risorizer-Cocoa-Prefix.pch */,
 			);
@@ -132,7 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				111111111111111111110019 /* IBdialog.xib in Resources */,
+				111111111111111111110019 /* Risorizer.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
