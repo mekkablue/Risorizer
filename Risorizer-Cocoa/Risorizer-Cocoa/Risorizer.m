@@ -402,6 +402,10 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
             _inset, _density, _size, _variance, (long)_distribute];
 }
 
+- (NSString *)generateCustomPreFilterParameter {
+    return [self generateCustomParameter];
+}
+
 // ---------------------------------------------------------------------------
 // Batch-export entry point (called via Custom Parameter)
 //
