@@ -5,56 +5,54 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <!--
-            File's Owner = Risorizer (ObjC class, subclass of GSFilterPlugin).
-            The root customView is connected to the inherited 'view' outlet so
-            GSFilterPlugin can display it as the filter dialog.
-        -->
         <customObject id="-2" userLabel="File's Owner" customClass="Risorizer">
             <connections>
-                <!-- Root view → GSFilterPlugin's 'view' property -->
-                <outlet property="view"          destination="1"          id="kzC-yw-bol"/>
-                <!-- Parameter controls -->
-                <outlet property="insetField"    destination="vfg-c5-0Yw" id="BGR-rE-mng"/>
-                <outlet property="densityField"  destination="uE5-x5-RlU" id="LBJ-LK-2eB"/>
-                <outlet property="sizeField"     destination="YmX-eP-UaW" id="mPy-Ck-cbS"/>
-                <outlet property="varianceField" destination="vUx-eX-IUe" id="s6Y-vt-lKr"/>
-                <outlet property="distributeField" destination="0eP-1v-yCT" id="9Vu-GC-XFw"/>
+                <outlet property="view"            destination="RIZ-rt-vie" id="kzC-yw-bol"/>
+                <outlet property="insetField"      destination="RIZ-f1-ins" id="BGR-rE-mng"/>
+                <outlet property="densityField"    destination="RIZ-f2-den" id="LBJ-LK-2eB"/>
+                <outlet property="sizeField"       destination="RIZ-f3-siz" id="mPy-Ck-cbS"/>
+                <outlet property="varianceField"   destination="RIZ-f4-var" id="s6Y-vt-lKr"/>
+                <outlet property="distributeField" destination="RIZ-f5-dis" id="9Vu-GC-XFw"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
 
-        <!-- Root view (211 × 161 px) -->
-        <customView id="1">
-            <rect key="frame" x="0.0" y="0.0" width="211" height="161"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+        <!--
+            Root view.
+            Default width 240 pt; widthSizable so Glyphs can make the panel wider.
+            Height 184 pt: 20 top + 5 rows × (22/25/21 pt) + 4 × 8-pt gaps + 20 bottom.
+
+            Layout columns (HIG form pattern):
+              Labels : leading=20, width=68, right-aligned text
+              Controls: leading=96 (= 20+68+8), trailing= view.trailing−20
+            Vertical chain anchored top-to-bottom with 8-pt gaps.
+        -->
+        <customView id="RIZ-rt-vie">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="184"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <subviews>
 
-                <!-- Row 1: Inset -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750"
-                           translatesAutoresizingMaskIntoConstraints="NO" id="O8f-Or-SWt">
-                    <rect key="frame" x="18" y="124" width="71" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="17" id="Yi8-fZ-vNh"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
-                                   sendsActionOnEndEditing="YES" title="Inset" id="dPX-2j-6DZ">
+                <!-- ── Row 1 : Inset ── -->
+                <textField translatesAutoresizingMaskIntoConstraints="NO"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="750"
+                           id="RIZ-l1-ins">
+                    <rect key="frame" x="20" y="145" width="68" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
+                                   title="Inset" id="RIZ-c1-ins">
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO"
-                           id="vfg-c5-0Yw" customClass="GSSteppingTextField">
-                    <rect key="frame" x="95" y="121" width="96" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="96" id="LmX-jl-TRn"/>
-                    </constraints>
+                <textField verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           id="RIZ-f1-ins" customClass="GSSteppingTextField">
+                    <rect key="frame" x="96" y="142" width="124" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
                                    selectable="YES" editable="YES" continuous="YES"
                                    sendsActionOnEndEditing="YES" state="on"
-                                   borderStyle="bezel" drawsBackground="YES" id="19c-la-cXO">
+                                   borderStyle="bezel" drawsBackground="YES" id="RIZ-c2-ins">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -64,27 +62,26 @@
                     </connections>
                 </textField>
 
-                <!-- Row 2: Density -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750"
-                           translatesAutoresizingMaskIntoConstraints="NO" id="p2Z-t6-ICh">
-                    <rect key="frame" x="18" y="99" width="71" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="17" id="SXA-P6-zes"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
-                                   sendsActionOnEndEditing="YES" title="Density" id="kuo-Zw-IBt">
+                <!-- ── Row 2 : Density ── -->
+                <textField translatesAutoresizingMaskIntoConstraints="NO"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="750"
+                           id="RIZ-l2-den">
+                    <rect key="frame" x="20" y="115" width="68" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
+                                   title="Density" id="RIZ-c1-den">
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO"
-                           id="uE5-x5-RlU" customClass="GSSteppingTextField">
-                    <rect key="frame" x="95" y="96" width="96" height="22"/>
+                <textField verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           id="RIZ-f2-den" customClass="GSSteppingTextField">
+                    <rect key="frame" x="96" y="112" width="124" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
                                    selectable="YES" editable="YES" continuous="YES"
                                    sendsActionOnEndEditing="YES" state="on"
-                                   borderStyle="bezel" drawsBackground="YES" id="nvA-HR-mQM">
+                                   borderStyle="bezel" drawsBackground="YES" id="RIZ-c2-den">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -94,27 +91,26 @@
                     </connections>
                 </textField>
 
-                <!-- Row 3: Size -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750"
-                           translatesAutoresizingMaskIntoConstraints="NO" id="swY-SO-ago">
-                    <rect key="frame" x="18" y="74" width="71" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="17" id="Y0U-ZT-b7r"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
-                                   sendsActionOnEndEditing="YES" title="Size" id="azD-lO-IuH">
+                <!-- ── Row 3 : Size ── -->
+                <textField translatesAutoresizingMaskIntoConstraints="NO"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="750"
+                           id="RIZ-l3-siz">
+                    <rect key="frame" x="20" y="85" width="68" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
+                                   title="Size" id="RIZ-c1-siz">
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO"
-                           id="YmX-eP-UaW" customClass="GSSteppingTextField">
-                    <rect key="frame" x="95" y="71" width="96" height="22"/>
+                <textField verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           id="RIZ-f3-siz" customClass="GSSteppingTextField">
+                    <rect key="frame" x="96" y="82" width="124" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
                                    selectable="YES" editable="YES" continuous="YES"
                                    sendsActionOnEndEditing="YES" state="on"
-                                   borderStyle="bezel" drawsBackground="YES" id="9gQ-J2-2bj">
+                                   borderStyle="bezel" drawsBackground="YES" id="RIZ-c2-siz">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -124,23 +120,26 @@
                     </connections>
                 </textField>
 
-                <!-- Row 4: Distribute (popup) -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750"
-                           translatesAutoresizingMaskIntoConstraints="NO" id="LzL-Vt-eMz">
-                    <rect key="frame" x="18" y="49" width="71" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
-                                   sendsActionOnEndEditing="YES" title="Distribute" id="VGk-Nd-m6H">
+                <!-- ── Row 4 : Distribute ── -->
+                <textField translatesAutoresizingMaskIntoConstraints="NO"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="750"
+                           id="RIZ-l4-dis">
+                    <rect key="frame" x="20" y="53" width="68" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
+                                   title="Distribute" id="RIZ-c1-dis">
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO"
-                             id="0eP-1v-yCT">
-                    <rect key="frame" x="92" y="42" width="103" height="25"/>
+                <popUpButton verticalHuggingPriority="750"
+                             translatesAutoresizingMaskIntoConstraints="NO"
+                             id="RIZ-f5-dis">
+                    <rect key="frame" x="96" y="49" width="124" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Linear" bezelStyle="rounded"
                                      alignment="left" lineBreakMode="truncatingTail" state="on"
-                                     borderStyle="border" inset="2" selectedItem="RKq-He-RR7" id="qAk-zM-Cov">
+                                     borderStyle="border" inset="2"
+                                     selectedItem="RKq-He-RR7" id="qAk-zM-Cov">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <menu key="menu" showsStateColumn="NO" id="d7K-D4-Aox">
@@ -158,23 +157,26 @@
                     </connections>
                 </popUpButton>
 
-                <!-- Row 5: Variance (slider) -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750"
-                           translatesAutoresizingMaskIntoConstraints="NO" id="JKm-fn-3Sw">
-                    <rect key="frame" x="18" y="20" width="71" height="18"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
-                                   sendsActionOnEndEditing="YES" title="Variance" id="190-9t-QLm">
+                <!-- ── Row 5 : Variance (slider) ── -->
+                <textField translatesAutoresizingMaskIntoConstraints="NO"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="750"
+                           id="RIZ-l5-var">
+                    <rect key="frame" x="20" y="22" width="68" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
+                                   title="Variance" id="RIZ-c1-var">
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO"
-                        id="vUx-eX-IUe">
-                    <rect key="frame" x="93" y="13" width="100" height="28"/>
+                <slider verticalHuggingPriority="750"
+                        translatesAutoresizingMaskIntoConstraints="NO"
+                        id="RIZ-f4-var">
+                    <rect key="frame" x="96" y="20" width="124" height="21"/>
                     <sliderCell key="cell" state="on" alignment="left"
                                 minValue="0.05" maxValue="0.95" doubleValue="0.5"
-                                tickMarkPosition="above" sliderType="linear" id="cjL-p8-AHd"/>
+                                tickMarkPosition="above" numberOfTickMarks="5"
+                                sliderType="linear" id="cjL-p8-AHd"/>
                     <connections>
                         <action selector="setVariance:" target="-2" id="4W4-rT-6TD"/>
                     </connections>
@@ -182,43 +184,117 @@
 
             </subviews>
 
-            <!-- Auto Layout constraints (matching the Python plugin's layout) -->
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="JKm-fn-3Sw" secondAttribute="bottom" constant="20" symbolic="YES" id="1kn-1l-YgA"/>
-                <constraint firstItem="LzL-Vt-eMz" firstAttribute="leading" secondItem="JKm-fn-3Sw" secondAttribute="leading" id="4KA-6X-nJ7"/>
-                <constraint firstItem="O8f-Or-SWt" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="4LM-cR-gH1"/>
-                <constraint firstItem="vfg-c5-0Yw" firstAttribute="leading" secondItem="O8f-Or-SWt" secondAttribute="trailing" constant="8" symbolic="YES" id="71B-SQ-wQN"/>
-                <constraint firstItem="uE5-x5-RlU" firstAttribute="leading" secondItem="YmX-eP-UaW" secondAttribute="leading" id="8fE-zY-MW8"/>
-                <constraint firstItem="YmX-eP-UaW" firstAttribute="trailing" secondItem="0eP-1v-yCT" secondAttribute="trailing" id="9JS-bC-tmx"/>
-                <constraint firstItem="uE5-x5-RlU" firstAttribute="trailing" secondItem="YmX-eP-UaW" secondAttribute="trailing" id="9h6-55-zMn"/>
-                <constraint firstItem="p2Z-t6-ICh" firstAttribute="baseline" secondItem="uE5-x5-RlU" secondAttribute="baseline" id="AkS-10-1Un"/>
-                <constraint firstItem="LzL-Vt-eMz" firstAttribute="top" secondItem="0eP-1v-yCT" secondAttribute="top" id="CQF-Jz-Tuf"/>
-                <constraint firstItem="vfg-c5-0Yw" firstAttribute="trailing" secondItem="uE5-x5-RlU" secondAttribute="trailing" id="E7z-Ew-gHP"/>
-                <constraint firstItem="swY-SO-ago" firstAttribute="baseline" secondItem="YmX-eP-UaW" secondAttribute="baseline" id="I3H-5v-RsG"/>
-                <constraint firstItem="vUx-eX-IUe" firstAttribute="baseline" secondItem="JKm-fn-3Sw" secondAttribute="firstBaseline" id="J8n-6T-gRB"/>
-                <constraint firstItem="O8f-Or-SWt" firstAttribute="baseline" secondItem="vfg-c5-0Yw" secondAttribute="baseline" id="NpB-IC-Aeb"/>
-                <constraint firstItem="LzL-Vt-eMz" firstAttribute="baseline" secondItem="0eP-1v-yCT" secondAttribute="firstBaseline" id="PTO-E5-C81"/>
-                <constraint firstItem="O8f-Or-SWt" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="S3q-i7-PSQ"/>
-                <constraint firstItem="JKm-fn-3Sw" firstAttribute="centerY" secondItem="vUx-eX-IUe" secondAttribute="centerY" id="Te8-PN-7H2"/>
-                <constraint firstItem="JKm-fn-3Sw" firstAttribute="firstBaseline" secondItem="vUx-eX-IUe" secondAttribute="firstBaseline" id="UbH-Lj-s1G"/>
-                <constraint firstItem="0eP-1v-yCT" firstAttribute="trailing" secondItem="vUx-eX-IUe" secondAttribute="trailing" id="Uwt-LA-xgx"/>
-                <constraint firstItem="0eP-1v-yCT" firstAttribute="leading" secondItem="LzL-Vt-eMz" secondAttribute="trailing" constant="8" symbolic="YES" id="W4t-eA-Jrm"/>
-                <constraint firstItem="swY-SO-ago" firstAttribute="firstBaseline" secondItem="YmX-eP-UaW" secondAttribute="firstBaseline" id="WMv-kE-i08"/>
-                <constraint firstItem="vUx-eX-IUe" firstAttribute="leading" secondItem="JKm-fn-3Sw" secondAttribute="trailing" constant="8" symbolic="YES" id="Xdm-wj-C5y"/>
-                <constraint firstAttribute="trailing" secondItem="vfg-c5-0Yw" secondAttribute="trailing" constant="20" symbolic="YES" id="Xt7-j4-vVB"/>
-                <constraint firstItem="p2Z-t6-ICh" firstAttribute="leading" secondItem="swY-SO-ago" secondAttribute="leading" id="a7a-iA-jHX"/>
-                <constraint firstItem="p2Z-t6-ICh" firstAttribute="top" secondItem="O8f-Or-SWt" secondAttribute="bottom" constant="8" symbolic="YES" id="aYl-pG-TYQ"/>
-                <constraint firstItem="LzL-Vt-eMz" firstAttribute="top" secondItem="swY-SO-ago" secondAttribute="bottom" constant="8" symbolic="YES" id="afu-9L-3m8"/>
-                <constraint firstItem="0eP-1v-yCT" firstAttribute="leading" secondItem="vUx-eX-IUe" secondAttribute="leading" id="cDV-Rl-j37"/>
-                <constraint firstItem="p2Z-t6-ICh" firstAttribute="firstBaseline" secondItem="uE5-x5-RlU" secondAttribute="firstBaseline" id="fmw-yJ-7Xa"/>
-                <constraint firstItem="uE5-x5-RlU" firstAttribute="leading" secondItem="p2Z-t6-ICh" secondAttribute="trailing" constant="8" symbolic="YES" id="fou-kK-FMN"/>
-                <constraint firstItem="swY-SO-ago" firstAttribute="top" secondItem="p2Z-t6-ICh" secondAttribute="bottom" constant="8" symbolic="YES" id="h1A-nL-ioS"/>
-                <constraint firstItem="O8f-Or-SWt" firstAttribute="leading" secondItem="p2Z-t6-ICh" secondAttribute="leading" id="hAm-I6-P1d"/>
-                <constraint firstItem="YmX-eP-UaW" firstAttribute="leading" secondItem="swY-SO-ago" secondAttribute="trailing" constant="8" symbolic="YES" id="jJv-3a-2Ds"/>
-                <constraint firstItem="swY-SO-ago" firstAttribute="leading" secondItem="LzL-Vt-eMz" secondAttribute="leading" id="kN8-xK-DMk"/>
-                <constraint firstItem="vfg-c5-0Yw" firstAttribute="leading" secondItem="uE5-x5-RlU" secondAttribute="leading" id="nsD-rq-a80"/>
-                <constraint firstItem="O8f-Or-SWt" firstAttribute="firstBaseline" secondItem="vfg-c5-0Yw" secondAttribute="firstBaseline" id="uTr-LZ-qeX"/>
-                <constraint firstItem="YmX-eP-UaW" firstAttribute="leading" secondItem="0eP-1v-yCT" secondAttribute="leading" id="yA7-sr-eDg"/>
+                <!--
+                    Label column: leading=20, width=68, right-aligned.
+                    Each label is vertically centred on its paired control.
+                -->
+                <!-- label leading = view.leading + 20 -->
+                <constraint firstItem="RIZ-l1-ins" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="20" id="c-ll1-lead"/>
+                <constraint firstItem="RIZ-l2-den" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="20" id="c-ll2-lead"/>
+                <constraint firstItem="RIZ-l3-siz" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="20" id="c-ll3-lead"/>
+                <constraint firstItem="RIZ-l4-dis" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="20" id="c-ll4-lead"/>
+                <constraint firstItem="RIZ-l5-var" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="20" id="c-ll5-lead"/>
+
+                <!-- label width = 68 -->
+                <constraint firstItem="RIZ-l1-ins" firstAttribute="width"
+                            constant="68" id="c-ll1-wid"/>
+                <constraint firstItem="RIZ-l2-den" firstAttribute="width"
+                            constant="68" id="c-ll2-wid"/>
+                <constraint firstItem="RIZ-l3-siz" firstAttribute="width"
+                            constant="68" id="c-ll3-wid"/>
+                <constraint firstItem="RIZ-l4-dis" firstAttribute="width"
+                            constant="68" id="c-ll4-wid"/>
+                <constraint firstItem="RIZ-l5-var" firstAttribute="width"
+                            constant="68" id="c-ll5-wid"/>
+
+                <!-- label.centerY = control.centerY -->
+                <constraint firstItem="RIZ-l1-ins" firstAttribute="centerY"
+                            secondItem="RIZ-f1-ins" secondAttribute="centerY"
+                            id="c-l1-cy"/>
+                <constraint firstItem="RIZ-l2-den" firstAttribute="centerY"
+                            secondItem="RIZ-f2-den" secondAttribute="centerY"
+                            id="c-l2-cy"/>
+                <constraint firstItem="RIZ-l3-siz" firstAttribute="centerY"
+                            secondItem="RIZ-f3-siz" secondAttribute="centerY"
+                            id="c-l3-cy"/>
+                <constraint firstItem="RIZ-l4-dis" firstAttribute="centerY"
+                            secondItem="RIZ-f5-dis" secondAttribute="centerY"
+                            id="c-l4-cy"/>
+                <constraint firstItem="RIZ-l5-var" firstAttribute="centerY"
+                            secondItem="RIZ-f4-var" secondAttribute="centerY"
+                            id="c-l5-cy"/>
+
+                <!--
+                    Control column: leading=96 (= 20 + 68 + 8), trailing = view.trailing − 20.
+                    No fixed-width → controls stretch when the panel widens.
+                -->
+                <!-- control.leading = view.leading + 96 -->
+                <constraint firstItem="RIZ-f1-ins" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="96" id="c-f1-lead"/>
+                <constraint firstItem="RIZ-f2-den" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="96" id="c-f2-lead"/>
+                <constraint firstItem="RIZ-f3-siz" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="96" id="c-f3-lead"/>
+                <constraint firstItem="RIZ-f5-dis" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="96" id="c-f4-lead"/>
+                <constraint firstItem="RIZ-f4-var" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="96" id="c-f5-lead"/>
+
+                <!-- view.trailing = control.trailing + 20 -->
+                <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
+                            secondItem="RIZ-f1-ins" secondAttribute="trailing"
+                            constant="20" id="c-f1-trail"/>
+                <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
+                            secondItem="RIZ-f2-den" secondAttribute="trailing"
+                            constant="20" id="c-f2-trail"/>
+                <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
+                            secondItem="RIZ-f3-siz" secondAttribute="trailing"
+                            constant="20" id="c-f3-trail"/>
+                <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
+                            secondItem="RIZ-f5-dis" secondAttribute="trailing"
+                            constant="20" id="c-f4-trail"/>
+                <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
+                            secondItem="RIZ-f4-var" secondAttribute="trailing"
+                            constant="20" id="c-f5-trail"/>
+
+                <!--
+                    Vertical chain (top→bottom), anchored to view top and bottom.
+                    8 pt between each row; 20 pt margins.
+                -->
+                <constraint firstItem="RIZ-f1-ins" firstAttribute="top"
+                            secondItem="RIZ-rt-vie" secondAttribute="top"
+                            constant="20" id="c-vert-top"/>
+                <constraint firstItem="RIZ-f2-den" firstAttribute="top"
+                            secondItem="RIZ-f1-ins" secondAttribute="bottom"
+                            constant="8"  id="c-vert-12"/>
+                <constraint firstItem="RIZ-f3-siz" firstAttribute="top"
+                            secondItem="RIZ-f2-den" secondAttribute="bottom"
+                            constant="8"  id="c-vert-23"/>
+                <constraint firstItem="RIZ-f5-dis" firstAttribute="top"
+                            secondItem="RIZ-f3-siz" secondAttribute="bottom"
+                            constant="8"  id="c-vert-34"/>
+                <constraint firstItem="RIZ-f4-var" firstAttribute="top"
+                            secondItem="RIZ-f5-dis" secondAttribute="bottom"
+                            constant="8"  id="c-vert-45"/>
+                <constraint firstItem="RIZ-rt-vie" firstAttribute="bottom"
+                            secondItem="RIZ-f4-var" secondAttribute="bottom"
+                            constant="20" id="c-vert-bot"/>
             </constraints>
             <point key="canvasLocation" x="88.5" y="220.5"/>
         </customView>
