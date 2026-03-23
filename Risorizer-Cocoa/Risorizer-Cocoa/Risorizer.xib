@@ -11,6 +11,7 @@
                 <outlet property="insetField"      destination="RIZ-f1-ins" id="BGR-rE-mng"/>
                 <outlet property="densityField"    destination="RIZ-f2-den" id="LBJ-LK-2eB"/>
                 <outlet property="sizeField"       destination="RIZ-f3-siz" id="mPy-Ck-cbS"/>
+                <outlet property="minSizeField"    destination="RIZ-f6-min" id="RIZ-out-min"/>
                 <outlet property="varianceField"   destination="RIZ-f4-var" id="s6Y-vt-lKr"/>
                 <outlet property="distributeField" destination="RIZ-f5-dis" id="9Vu-GC-XFw"/>
             </connections>
@@ -29,7 +30,7 @@
             Vertical chain anchored top-to-bottom with 8-pt gaps.
         -->
         <customView id="RIZ-rt-vie">
-            <rect key="frame" x="0.0" y="0.0" width="280" height="184"/>
+            <rect key="frame" x="0.0" y="0.0" width="280" height="214"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <subviews>
 
@@ -37,7 +38,7 @@
                 <textField translatesAutoresizingMaskIntoConstraints="NO"
                            horizontalHuggingPriority="251" verticalHuggingPriority="750"
                            id="RIZ-l1-ins">
-                    <rect key="frame" x="20" y="145" width="68" height="17"/>
+                    <rect key="frame" x="20" y="175" width="68" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
                                    title="Inset" id="RIZ-c1-ins">
                         <font key="font" metaFont="system"/>
@@ -49,7 +50,7 @@
                            translatesAutoresizingMaskIntoConstraints="NO"
                            toolTip="Shrinks the glyph outline by this amount before placing spots (in units)"
                            id="RIZ-f1-ins" customClass="GSSteppingTextField">
-                    <rect key="frame" x="96" y="142" width="164" height="22"/>
+                    <rect key="frame" x="96" y="172" width="164" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
                                    selectable="YES" editable="YES" continuous="YES"
                                    sendsActionOnEndEditing="YES" state="on"
@@ -67,7 +68,7 @@
                 <textField translatesAutoresizingMaskIntoConstraints="NO"
                            horizontalHuggingPriority="251" verticalHuggingPriority="750"
                            id="RIZ-l2-den">
-                    <rect key="frame" x="20" y="115" width="68" height="17"/>
+                    <rect key="frame" x="20" y="145" width="68" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
                                    title="Density" id="RIZ-c1-den">
                         <font key="font" metaFont="system"/>
@@ -79,7 +80,7 @@
                            translatesAutoresizingMaskIntoConstraints="NO"
                            toolTip="Number of spots per 10,000 square units of glyph area"
                            id="RIZ-f2-den" customClass="GSSteppingTextField">
-                    <rect key="frame" x="96" y="112" width="164" height="22"/>
+                    <rect key="frame" x="96" y="142" width="164" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
                                    selectable="YES" editable="YES" continuous="YES"
                                    sendsActionOnEndEditing="YES" state="on"
@@ -97,7 +98,7 @@
                 <textField translatesAutoresizingMaskIntoConstraints="NO"
                            horizontalHuggingPriority="251" verticalHuggingPriority="750"
                            id="RIZ-l3-siz">
-                    <rect key="frame" x="20" y="85" width="68" height="17"/>
+                    <rect key="frame" x="20" y="115" width="68" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
                                    title="Size" id="RIZ-c1-siz">
                         <font key="font" metaFont="system"/>
@@ -109,7 +110,7 @@
                            translatesAutoresizingMaskIntoConstraints="NO"
                            toolTip="Average triangle side length in units"
                            id="RIZ-f3-siz" customClass="GSSteppingTextField">
-                    <rect key="frame" x="96" y="82" width="164" height="22"/>
+                    <rect key="frame" x="96" y="112" width="164" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
                                    selectable="YES" editable="YES" continuous="YES"
                                    sendsActionOnEndEditing="YES" state="on"
@@ -123,7 +124,37 @@
                     </connections>
                 </textField>
 
-                <!-- ── Row 4 : Distribute ── -->
+                <!-- ── Row 4 : Min Size ── -->
+                <textField translatesAutoresizingMaskIntoConstraints="NO"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="750"
+                           id="RIZ-l6-min">
+                    <rect key="frame" x="20" y="85" width="68" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right"
+                                   title="Min Size" id="RIZ-c1-min">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           toolTip="Remove debris paths whose area (in square units) is smaller than this value (0 = keep all)"
+                           id="RIZ-f6-min" customClass="GSSteppingTextField">
+                    <rect key="frame" x="96" y="82" width="164" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
+                                   selectable="YES" editable="YES" continuous="YES"
+                                   sendsActionOnEndEditing="YES" state="on"
+                                   borderStyle="bezel" drawsBackground="YES" id="RIZ-c2-min">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="setMinSize:" target="-2" id="RIZ-act-min"/>
+                    </connections>
+                </textField>
+
+                <!-- ── Row 5 : Distribute ── -->
                 <textField translatesAutoresizingMaskIntoConstraints="NO"
                            horizontalHuggingPriority="251" verticalHuggingPriority="750"
                            id="RIZ-l4-dis">
@@ -204,6 +235,9 @@
                 <constraint firstItem="RIZ-l3-siz" firstAttribute="leading"
                             secondItem="RIZ-rt-vie" secondAttribute="leading"
                             constant="20" id="c-ll3-lead"/>
+                <constraint firstItem="RIZ-l6-min" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="20" id="c-ll6-lead"/>
                 <constraint firstItem="RIZ-l4-dis" firstAttribute="leading"
                             secondItem="RIZ-rt-vie" secondAttribute="leading"
                             constant="20" id="c-ll4-lead"/>
@@ -218,6 +252,8 @@
                             constant="68" id="c-ll2-wid"/>
                 <constraint firstItem="RIZ-l3-siz" firstAttribute="width"
                             constant="68" id="c-ll3-wid"/>
+                <constraint firstItem="RIZ-l6-min" firstAttribute="width"
+                            constant="68" id="c-ll6-wid"/>
                 <constraint firstItem="RIZ-l4-dis" firstAttribute="width"
                             constant="68" id="c-ll4-wid"/>
                 <constraint firstItem="RIZ-l5-var" firstAttribute="width"
@@ -233,6 +269,9 @@
                 <constraint firstItem="RIZ-l3-siz" firstAttribute="centerY"
                             secondItem="RIZ-f3-siz" secondAttribute="centerY"
                             id="c-l3-cy"/>
+                <constraint firstItem="RIZ-l6-min" firstAttribute="centerY"
+                            secondItem="RIZ-f6-min" secondAttribute="centerY"
+                            id="c-l6-cy"/>
                 <constraint firstItem="RIZ-l4-dis" firstAttribute="centerY"
                             secondItem="RIZ-f5-dis" secondAttribute="centerY"
                             id="c-l4-cy"/>
@@ -254,6 +293,9 @@
                 <constraint firstItem="RIZ-f3-siz" firstAttribute="leading"
                             secondItem="RIZ-rt-vie" secondAttribute="leading"
                             constant="96" id="c-f3-lead"/>
+                <constraint firstItem="RIZ-f6-min" firstAttribute="leading"
+                            secondItem="RIZ-rt-vie" secondAttribute="leading"
+                            constant="96" id="c-f6-lead"/>
                 <constraint firstItem="RIZ-f5-dis" firstAttribute="leading"
                             secondItem="RIZ-rt-vie" secondAttribute="leading"
                             constant="96" id="c-f4-lead"/>
@@ -272,19 +314,24 @@
                             secondItem="RIZ-f3-siz" secondAttribute="trailing"
                             constant="20" id="c-f3-trail"/>
                 <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
+                            secondItem="RIZ-f6-min" secondAttribute="trailing"
+                            constant="20" id="c-f6-trail"/>
+                <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
                             secondItem="RIZ-f5-dis" secondAttribute="trailing"
                             constant="20" id="c-f4-trail"/>
                 <constraint firstItem="RIZ-rt-vie" firstAttribute="trailing"
                             secondItem="RIZ-f4-var" secondAttribute="trailing"
                             constant="20" id="c-f5-trail"/>
 
-                <!-- stepping field height = 22 (explicit, so all three are identical) -->
+                <!-- stepping field height = 22 (explicit, so all four are identical) -->
                 <constraint firstItem="RIZ-f1-ins" firstAttribute="height"
                             constant="22" id="c-f1-h"/>
                 <constraint firstItem="RIZ-f2-den" firstAttribute="height"
                             constant="22" id="c-f2-h"/>
                 <constraint firstItem="RIZ-f3-siz" firstAttribute="height"
                             constant="22" id="c-f3-h"/>
+                <constraint firstItem="RIZ-f6-min" firstAttribute="height"
+                            constant="22" id="c-f6-h"/>
 
                 <!--
                     Vertical chain (top→bottom), anchored to view top and bottom.
@@ -299,12 +346,15 @@
                 <constraint firstItem="RIZ-f3-siz" firstAttribute="top"
                             secondItem="RIZ-f2-den" secondAttribute="bottom"
                             constant="8"  id="c-vert-23"/>
-                <constraint firstItem="RIZ-f5-dis" firstAttribute="top"
+                <constraint firstItem="RIZ-f6-min" firstAttribute="top"
                             secondItem="RIZ-f3-siz" secondAttribute="bottom"
                             constant="8"  id="c-vert-34"/>
+                <constraint firstItem="RIZ-f5-dis" firstAttribute="top"
+                            secondItem="RIZ-f6-min" secondAttribute="bottom"
+                            constant="8"  id="c-vert-45"/>
                 <constraint firstItem="RIZ-f4-var" firstAttribute="top"
                             secondItem="RIZ-f5-dis" secondAttribute="bottom"
-                            constant="8"  id="c-vert-45"/>
+                            constant="8"  id="c-vert-56"/>
                 <constraint firstItem="RIZ-rt-vie" firstAttribute="bottom"
                             secondItem="RIZ-f4-var" secondAttribute="bottom"
                             constant="20" id="c-vert-bot"/>

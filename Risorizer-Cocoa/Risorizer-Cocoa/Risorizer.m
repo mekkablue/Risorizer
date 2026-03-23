@@ -44,6 +44,7 @@ keepCompatibleOutlines:(BOOL)keepCompatibleOutlines;
 static NSString * const kPrefInset      = @"com.mekkablue.Risorizer.inset";
 static NSString * const kPrefDensity    = @"com.mekkablue.Risorizer.density";
 static NSString * const kPrefSize       = @"com.mekkablue.Risorizer.size";
+static NSString * const kPrefMinSize    = @"com.mekkablue.Risorizer.minSize";
 static NSString * const kPrefVariance   = @"com.mekkablue.Risorizer.variance";
 static NSString * const kPrefDistribute = @"com.mekkablue.Risorizer.distribute";
 
@@ -54,6 +55,7 @@ static NSString * const kPrefDistribute = @"com.mekkablue.Risorizer.distribute";
 static const CGFloat kDefaultInset      = 15.0;
 static const CGFloat kDefaultDensity    =  2.0;
 static const CGFloat kDefaultSize       = 15.0;
+static const CGFloat kDefaultMinSize    =  0.0;
 static const CGFloat kDefaultVariance   =  0.5;
 static const NSInteger kDefaultDistribute = 0;
 
@@ -249,7 +251,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
 @implementation Risorizer
 
-@synthesize insetField, densityField, sizeField, varianceField, distributeField;
+@synthesize insetField, densityField, sizeField, minSizeField, varianceField, distributeField;
 
 // ---------------------------------------------------------------------------
 // Plugin lifecycle
@@ -282,8 +284,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
 - (NSString *)customParameterString {
     return [NSString stringWithFormat:
-            @"Risorizer; inset:%g; density:%g; size:%g; variance:%g; distribute:%ld",
-            _inset, _density, _size, _variance, (long)_distribute];
+            @"Risorizer; inset:%g; density:%g; size:%g; minSize:%g; variance:%g; distribute:%ld",
+            _inset, _density, _size, _minSize, _variance, (long)_distribute];
 }
 
 // ---------------------------------------------------------------------------
@@ -299,6 +301,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         kPrefInset:      @(kDefaultInset),
         kPrefDensity:    @(kDefaultDensity),
         kPrefSize:       @(kDefaultSize),
+        kPrefMinSize:    @(kDefaultMinSize),
         kPrefVariance:   @(kDefaultVariance),
         kPrefDistribute: @(kDefaultDistribute),
     };
@@ -307,12 +310,14 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
     _inset      = [ud floatForKey:kPrefInset];
     _density    = [ud floatForKey:kPrefDensity];
     _size       = [ud floatForKey:kPrefSize];
+    _minSize    = [ud floatForKey:kPrefMinSize];
     _variance   = [ud floatForKey:kPrefVariance];
     _distribute = [ud integerForKey:kPrefDistribute];
 
     [insetField    setFloatValue:(float)_inset];
     [densityField  setFloatValue:(float)_density];
     [sizeField     setFloatValue:(float)_size];
+    [minSizeField  setFloatValue:(float)_minSize];
     [varianceField setFloatValue:(float)_variance];
     [distributeField selectItemAtIndex:_distribute];
 
@@ -338,6 +343,12 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 - (IBAction)setSize:(id)sender {
     _size = [sender floatValue];
     [[NSUserDefaults standardUserDefaults] setFloat:(float)_size forKey:kPrefSize];
+    [self process:nil];
+}
+
+- (IBAction)setMinSize:(id)sender {
+    _minSize = [sender floatValue];
+    [[NSUserDefaults standardUserDefaults] setFloat:(float)_minSize forKey:kPrefMinSize];
     [self process:nil];
 }
 
@@ -385,6 +396,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                      inset:_inset
                    density:_density
                       size:_size
+                   minSize:_minSize
                   variance:_variance
                 distribute:_distribute];
         [layer clearSelection];
@@ -404,8 +416,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
 - (NSString *)generateCustomParameter {
     return [NSString stringWithFormat:
-            @"Risorizer; inset:%g; density:%g; size:%g; variance:%g; distribute:%ld",
-            _inset, _density, _size, _variance, (long)_distribute];
+            @"Risorizer; inset:%g; density:%g; size:%g; minSize:%g; variance:%g; distribute:%ld",
+            _inset, _density, _size, _minSize, _variance, (long)_distribute];
 }
 
 - (NSString *)generateCustomPreFilterParameter {
@@ -423,6 +435,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
     CGFloat   inset      = kDefaultInset;
     CGFloat   density    = kDefaultDensity;
     CGFloat   size       = kDefaultSize;
+    CGFloat   minSize    = kDefaultMinSize;
     CGFloat   variance   = kDefaultVariance;
     NSInteger distribute = kDefaultDistribute;
 
@@ -438,6 +451,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         if ([key isEqualToString:@"inset"])           inset      = val;
         else if ([key isEqualToString:@"density"])    density    = val;
         else if ([key isEqualToString:@"size"])       size       = val;
+        else if ([key isEqualToString:@"minSize"])    minSize    = val;
         else if ([key isEqualToString:@"variance"])   variance   = val;
         else if ([key isEqualToString:@"distribute"]) distribute = (NSInteger)val;
     }
@@ -460,6 +474,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                      inset:inset
                    density:density
                       size:size
+                   minSize:minSize
                   variance:variance
                 distribute:distribute];
     }
@@ -472,6 +487,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                inset:(CGFloat)inset
              density:(CGFloat)density
                 size:(CGFloat)size
+             minSize:(CGFloat)minSize
             variance:(CGFloat)variance
           distribute:(NSInteger)distribute {
 
@@ -496,10 +512,28 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                                                     distribute);
         if (!spotLayer) return;
 
-        // 4. Clean up spots: correct direction, remove overlap, then reverse
-        //    so they act as counter-shapes when added to the main outline.
+        // 4. Clean up spots: correct direction, remove overlap, then optionally
+        //    filter out small paths, then reverse so they act as counter-shapes
+        //    when added to the main outline.
         [spotLayer correctPathDirection];
         [spotLayer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
+
+        // Remove debris paths whose area is smaller than minSize (in square units).
+        if (minSize > 0.0) {
+            NSMutableArray<GSShape *> *toRemove = [NSMutableArray array];
+            for (GSShape *shape in spotLayer.shapes) {
+                if ([shape isKindOfClass:[GSPath class]]) {
+                    CGFloat area = (CGFloat)fabs([(GSPath *)shape area]);
+                    if (area < minSize) {
+                        [toRemove addObject:shape];
+                    }
+                }
+            }
+            for (GSShape *shape in toRemove) {
+                [spotLayer removeShape:shape];
+            }
+        }
+
         for (GSShape *shape in spotLayer.shapes) {
             if ([shape isKindOfClass:[GSPath class]]) {
                 [(GSPath *)shape reverse];
