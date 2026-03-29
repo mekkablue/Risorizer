@@ -17,6 +17,7 @@
 #import <GlyphsCore/GSPath.h>
 #import <GlyphsCore/GSNode.h>
 #import <GlyphsCore/GSCallbackHandler.h>
+#import <GlyphsCore/GSPathOperator.h>
 
 #import <math.h>
 
@@ -47,6 +48,7 @@ static NSString * const kPrefSize       = @"com.mekkablue.Risorizer.size";
 static NSString * const kPrefMinSize    = @"com.mekkablue.Risorizer.minSize";
 static NSString * const kPrefVariance   = @"com.mekkablue.Risorizer.variance";
 static NSString * const kPrefDistribute = @"com.mekkablue.Risorizer.distribute";
+static NSString * const kPrefSubtract   = @"com.mekkablue.Risorizer.subtract";
 
 // ---------------------------------------------------------------------------
 // Distribution defaults
@@ -58,6 +60,7 @@ static const CGFloat kDefaultSize       = 15.0;
 static const CGFloat kDefaultMinSize    =  0.0;
 static const CGFloat kDefaultVariance   =  0.5;
 static const NSInteger kDefaultDistribute = 0;
+static const BOOL     kDefaultSubtract    = NO;
 
 // ---------------------------------------------------------------------------
 // Math helpers (static / inline for speed)
@@ -251,7 +254,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
 @implementation Risorizer
 
-@synthesize insetField, densityField, sizeField, minSizeField, varianceField, distributeField;
+@synthesize insetField, densityField, sizeField, minSizeField, subtractField, varianceField, distributeField;
 
 // ---------------------------------------------------------------------------
 // Plugin lifecycle
@@ -284,8 +287,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
 - (NSString *)customParameterString {
     return [NSString stringWithFormat:
-            @"Risorizer; inset:%g; density:%g; size:%g; minSize:%g; variance:%g; distribute:%ld",
-            _inset, _density, _size, _minSize, _variance, (long)_distribute];
+            @"Risorizer; inset:%g; density:%g; size:%g; minSize:%g; variance:%g; distribute:%ld; subtract:%d",
+            _inset, _density, _size, _minSize, _variance, (long)_distribute, (int)_subtract];
 }
 
 // ---------------------------------------------------------------------------
@@ -304,6 +307,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         kPrefMinSize:    @(kDefaultMinSize),
         kPrefVariance:   @(kDefaultVariance),
         kPrefDistribute: @(kDefaultDistribute),
+        kPrefSubtract:   @(kDefaultSubtract),
     };
     [ud registerDefaults:defs];
 
@@ -313,11 +317,13 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
     _minSize    = [ud floatForKey:kPrefMinSize];
     _variance   = [ud floatForKey:kPrefVariance];
     _distribute = [ud integerForKey:kPrefDistribute];
+    _subtract   = [ud boolForKey:kPrefSubtract];
 
     [insetField    setFloatValue:(float)_inset];
     [densityField  setFloatValue:(float)_density];
     [sizeField     setFloatValue:(float)_size];
     [minSizeField  setFloatValue:(float)_minSize];
+    [subtractField setState:_subtract ? NSControlStateValueOn : NSControlStateValueOff];
     [varianceField setFloatValue:(float)_variance];
     [distributeField selectItemAtIndex:_distribute];
 
@@ -349,6 +355,12 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 - (IBAction)setMinSize:(id)sender {
     _minSize = [sender floatValue];
     [[NSUserDefaults standardUserDefaults] setFloat:(float)_minSize forKey:kPrefMinSize];
+    [self process:nil];
+}
+
+- (IBAction)setSubtract:(id)sender {
+    _subtract = ([sender state] == NSControlStateValueOn);
+    [[NSUserDefaults standardUserDefaults] setBool:_subtract forKey:kPrefSubtract];
     [self process:nil];
 }
 
@@ -398,7 +410,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                       size:_size
                    minSize:_minSize
                   variance:_variance
-                distribute:_distribute];
+                distribute:_distribute
+                  subtract:_subtract];
         [layer clearSelection];
     }
     [super process:nil];
@@ -416,8 +429,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 
 - (NSString *)generateCustomParameter {
     return [NSString stringWithFormat:
-            @"Risorizer; inset:%g; density:%g; size:%g; minSize:%g; variance:%g; distribute:%ld",
-            _inset, _density, _size, _minSize, _variance, (long)_distribute];
+            @"Risorizer; inset:%g; density:%g; size:%g; minSize:%g; variance:%g; distribute:%ld; subtract:%d",
+            _inset, _density, _size, _minSize, _variance, (long)_distribute, (int)_subtract];
 }
 
 - (NSString *)generateCustomPreFilterParameter {
@@ -438,6 +451,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
     CGFloat   minSize    = kDefaultMinSize;
     CGFloat   variance   = kDefaultVariance;
     NSInteger distribute = kDefaultDistribute;
+    BOOL      subtract   = kDefaultSubtract;
 
     for (NSUInteger i = 1; i < arguments.count; i++) {
         NSArray<NSString *> *pair = [[arguments[i] stringByTrimmingCharactersInSet:
@@ -454,6 +468,7 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         else if ([key isEqualToString:@"minSize"])    minSize    = val;
         else if ([key isEqualToString:@"variance"])   variance   = val;
         else if ([key isEqualToString:@"distribute"]) distribute = (NSInteger)val;
+        else if ([key isEqualToString:@"subtract"])   subtract   = (BOOL)(NSInteger)val;
     }
 
     _checkSelection = NO;
@@ -476,7 +491,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                       size:size
                    minSize:minSize
                   variance:variance
-                distribute:distribute];
+                distribute:distribute
+                  subtract:subtract];
     }
 }
 
@@ -489,7 +505,8 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                 size:(CGFloat)size
              minSize:(CGFloat)minSize
             variance:(CGFloat)variance
-          distribute:(NSInteger)distribute {
+          distribute:(NSInteger)distribute
+            subtract:(BOOL)subtract {
 
     if (layer.shapes.count == 0) return;
     if ([layer.parent.name isEqualToString:@".notdef"]) return;
@@ -512,40 +529,66 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
                                                     distribute);
         if (!spotLayer) return;
 
-        // 4. Clean up spots: correct direction, remove overlap, then optionally
-        //    filter out small paths, then reverse so they act as counter-shapes
-        //    when added to the main outline.
-        [spotLayer correctPathDirection];
-        [spotLayer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
+        if (subtract) {
+            // 4a. Subtract mode: clean spots without reversing, then boolean-subtract
+            //     from the main layer.
+            [spotLayer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
+            [spotLayer correctPathDirection];
 
-        // Remove debris paths whose area is smaller than minSize (in square units).
-        if (minSize > 0.0) {
-            NSMutableArray<GSShape *> *toRemove = [NSMutableArray array];
-            for (GSShape *shape in spotLayer.shapes) {
-                if ([shape isKindOfClass:[GSPath class]]) {
-                    CGFloat area = (CGFloat)fabs([(GSPath *)shape area]);
-                    if (area < minSize) {
-                        [toRemove addObject:shape];
+            // Remove debris paths smaller than minSize.
+            if (minSize > 0.0) {
+                NSMutableArray<GSShape *> *toRemove = [NSMutableArray array];
+                for (GSShape *shape in spotLayer.shapes) {
+                    if ([shape isKindOfClass:[GSPath class]]) {
+                        CGFloat area = (CGFloat)fabs([(GSPath *)shape area]);
+                        if (area < minSize) [toRemove addObject:shape];
                     }
                 }
+                for (GSShape *shape in toRemove) [spotLayer removeShape:shape];
             }
-            for (GSShape *shape in toRemove) {
-                [spotLayer removeShape:shape];
+
+            // Build subtrahend (spots) and minuend (main layer paths), then
+            // perform the boolean difference.
+            NSMutableArray<GSPath *> *subtrahends = [NSMutableArray array];
+            for (GSShape *shape in spotLayer.shapes) {
+                if ([shape isKindOfClass:[GSPath class]])
+                    [subtrahends addObject:(GSPath *)shape];
+            }
+            NSMutableArray<GSPath *> *minuends = [NSMutableArray array];
+            for (GSShape *shape in layer.shapes) {
+                if ([shape isKindOfClass:[GSPath class]])
+                    [minuends addObject:(GSPath *)shape];
+            }
+            NSError *subtractError = nil;
+            [GSPathOperator subtractPaths:subtrahends from:minuends error:&subtractError];
+            layer.shapes = (NSMutableArray<GSShape *> *)minuends;
+        } else {
+            // 4b. Winding-rule mode: correct direction, remove overlaps between spots,
+            //     then reverse so they act as counter-shapes inside the main outline.
+            [spotLayer correctPathDirection];
+            [spotLayer flattenOutlinesRemoveOverlap:YES origHints:nil secondaryPath:nil extraHandles:nil error:nil];
+
+            // Remove debris paths smaller than minSize.
+            if (minSize > 0.0) {
+                NSMutableArray<GSShape *> *toRemove = [NSMutableArray array];
+                for (GSShape *shape in spotLayer.shapes) {
+                    if ([shape isKindOfClass:[GSPath class]]) {
+                        CGFloat area = (CGFloat)fabs([(GSPath *)shape area]);
+                        if (area < minSize) [toRemove addObject:shape];
+                    }
+                }
+                for (GSShape *shape in toRemove) [spotLayer removeShape:shape];
+            }
+
+            for (GSShape *shape in spotLayer.shapes) {
+                if ([shape isKindOfClass:[GSPath class]]) [(GSPath *)shape reverse];
+            }
+            for (GSShape *shape in spotLayer.shapes) {
+                [layer addShape:shape];
             }
         }
 
-        for (GSShape *shape in spotLayer.shapes) {
-            if ([shape isKindOfClass:[GSPath class]]) {
-                [(GSPath *)shape reverse];
-            }
-        }
-
-        // 5. Add reversed spots to the original layer
-        for (GSShape *shape in spotLayer.shapes) {
-            [layer addShape:shape];
-        }
-
-        // 6. Clean up
+        // 5. Clean up
         [layer roundCoordinates];
         [layer cleanUpPaths];
         [layer correctPathDirection];

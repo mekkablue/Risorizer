@@ -26,12 +26,14 @@
     CGFloat   _minSize;
     CGFloat   _variance;
     NSInteger _distribute;
+    BOOL      _subtract;
 }
 
 @property (weak) IBOutlet NSTextField   *insetField;
 @property (weak) IBOutlet NSTextField   *densityField;
 @property (weak) IBOutlet NSTextField   *sizeField;
 @property (weak) IBOutlet NSTextField   *minSizeField;
+@property (weak) IBOutlet NSButton      *subtractField;
 @property (weak) IBOutlet NSSlider      *varianceField;
 @property (weak) IBOutlet NSPopUpButton *distributeField;
 
@@ -39,6 +41,7 @@
 - (IBAction)setDensity:(id)sender;
 - (IBAction)setSize:(id)sender;
 - (IBAction)setMinSize:(id)sender;
+- (IBAction)setSubtract:(id)sender;
 - (IBAction)setVariance:(id)sender;
 - (IBAction)setDistribute:(id)sender;
 
@@ -55,6 +58,7 @@
                 size:(CGFloat)size
              minSize:(CGFloat)minSize
             variance:(CGFloat)variance
-          distribute:(NSInteger)distribute;
+          distribute:(NSInteger)distribute
+            subtract:(BOOL)subtract;
 
 @end
