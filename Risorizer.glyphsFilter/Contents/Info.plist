@@ -17,13 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.1</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20</string>
+	<string>21</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -43,7 +43,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>12.0</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright Rainer Erich Scheichelbauer, 2020–2025</string>
+	<string>Copyright Rainer Erich Scheichelbauer, 2020–2026</string>
 	<key>NSMinimumSystemVersion</key>
 	<string>12.0</string>
 	<key>NSPrincipalClass</key>
@@ -53,6 +53,6 @@
 	<key>productPageURL</key>
 	<string>https://github.com/mekkablue/Risorizer</string>
 	<key>productReleaseNotes</key>
-	<string>Native Cocoa (ObjC) rewrite for better performance.</string>
+	<string>Added Subtract option: boolean-subtracts debris from glyph paths instead of reversing path direction.</string>
 </dict>
 </plist>
