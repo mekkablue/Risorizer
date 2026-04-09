@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>Subtractor</string>
 	<key>CFBundleExecutable</key>
 	<string>plugin</string>
 	<key>CFBundleIdentifier</key>
@@ -12,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Subtractor</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>

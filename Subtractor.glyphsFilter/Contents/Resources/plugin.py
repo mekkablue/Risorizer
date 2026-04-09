@@ -59,6 +59,7 @@ class Subtractor(FilterWithoutDialog):
 			'fr': 'Soustracteur',
 			'es': 'Sustractor',
 		})
+		self.keyboardShortcut = None  # Cmd+Shift+key if set
 
 	@objc.python_method
 	def filter(self, layer, inEditView, customParameters):
