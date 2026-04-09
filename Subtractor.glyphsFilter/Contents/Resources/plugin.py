@@ -1,5 +1,4 @@
 # encoding: utf-8
-from __future__ import division, print_function, unicode_literals
 
 ###########################################################################################################
 #
@@ -28,41 +27,25 @@ def getSubtractGlyphs(font):
 	        if g.name == '_subtract' or g.name.startswith('_subtract.')]
 
 
-def isLayerEmpty(layer):
-	"""Return True if the layer has no outlines or components."""
-	if Glyphs.versionNumber >= 3:
-		return not layer.shapes
-	else:
-		return not layer.paths and not layer.components
-
-
 def subtractFromLayer(targetLayer, subtractLayer):
 	"""
-	Boolean-subtract the shapes of subtractLayer from targetLayer.
-	A decomposed copy of subtractLayer is added with reversed path directions,
-	then removeOverlap() performs the boolean subtraction.
+	Subtract the shapes of subtractLayer from targetLayer.
+	Both layers are decomposed and have overlaps removed first.
+	The subtract shapes are then added to the target layer and
+	correctPathDirection() lets nested paths become counter-forms.
 	"""
-	subtractCopy = subtractLayer.copyDecomposedLayer()
-	subtractCopy.correctPathDirection()
-
-	# Reverse all paths so they punch holes in the target layer
-	if Glyphs.versionNumber >= 3:
-		for shape in subtractCopy.shapes:
-			if isinstance(shape, GSPath):
-				shape.reverse()
-	else:
-		for path in subtractCopy.paths:
-			path.reverse()
-
-	# Append the reversed paths to the target layer
-	if Glyphs.versionNumber >= 3:
-		for shape in subtractCopy.shapes:
-			targetLayer.shapes.append(shape)
-	else:
-		for path in subtractCopy.paths:
-			targetLayer.paths.append(path)
-
+	# Clean up the target layer in place
 	targetLayer.removeOverlap()
+
+	# Get a clean, decomposed copy of the subtract shapes
+	subtractCopy = subtractLayer.copyDecomposedLayer()
+	subtractCopy.removeOverlap()
+
+	# Add subtract shapes to the target layer (no direction reversal)
+	for shape in subtractCopy.shapes:
+		targetLayer.shapes.append(shape)
+
+	# Path direction correction turns overlapping inner shapes into holes
 	targetLayer.correctPathDirection()
 
 
@@ -88,7 +71,7 @@ class Subtractor(FilterWithoutDialog):
 					return
 				if glyphName.startswith('_subtract'):
 					return
-				if isLayerEmpty(layer):
+				if not layer.shapes:
 					return
 
 			font = layer.parent.parent
@@ -114,7 +97,7 @@ class Subtractor(FilterWithoutDialog):
 			if subtractLayer is None and subtractGlyph.layers:
 				subtractLayer = subtractGlyph.layers[0]
 
-			if subtractLayer is None or isLayerEmpty(subtractLayer):
+			if subtractLayer is None or not subtractLayer.shapes:
 				return
 
 			subtractFromLayer(layer, subtractLayer)
