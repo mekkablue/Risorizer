@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Subtractor">
             <connections>
-                <outlet property="dialog"         destination="1"           id="out-dg-sub"/>
-                <outlet property="subtractField"  destination="fld-su-btr"  id="out-su-btr"/>
-                <outlet property="rotateField"    destination="fld-ro-tat"  id="out-ro-tat"/>
-                <outlet property="offsetField"    destination="fld-of-fst"  id="out-of-fst"/>
+                <outlet property="dialog" destination="1" id="out-dg-sub"/>
+                <outlet property="offsetField" destination="fld-of-fst" id="out-of-fst"/>
+                <outlet property="rotateField" destination="fld-ro-tat" id="out-ro-tat"/>
+                <outlet property="subtractField" destination="fld-su-btr" id="out-su-btr"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1">
-            <rect key="frame" x="0.0" y="0.0" width="250" height="122"/>
+            <rect key="frame" x="0.0" y="0.0" width="267" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-
-                <!-- Row 1: Subtract Shapes label -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-su-btr">
-                    <rect key="frame" x="18" y="86" width="108" height="17"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-su-btr">
+                    <rect key="frame" x="18" y="93" width="110" height="17"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="17" id="lbl-su-btr-h"/>
+                        <constraint firstAttribute="height" constant="17" id="Vpt-DV-6WY"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Subtract Shapes" id="lbl-su-btr-c">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Subtract Shapes" id="lbl-su-btr-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-
-                <!-- Row 1: subtractField (plain NSTextField — string input) -->
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-su-btr">
-                    <rect key="frame" x="134" y="83" width="96" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="96" id="fld-su-btr-w"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="fld-su-btr-c">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-su-btr">
+                    <rect key="frame" x="134" y="90" width="113" height="25"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="fld-su-btr-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -48,24 +41,20 @@
                         <action selector="setSubtractShapes:" target="-2" id="act-su-btr"/>
                     </connections>
                 </textField>
-
-                <!-- Row 2: Random Rotate label -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-ro-tat">
-                    <rect key="frame" x="18" y="57" width="108" height="17"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-ro-tat">
+                    <rect key="frame" x="31" y="58" width="97" height="17"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="17" id="lbl-ro-tat-h"/>
+                        <constraint firstAttribute="height" constant="17" id="gWE-0L-4ix"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Random Rotate" id="lbl-ro-tat-c">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Random Rotate" id="lbl-ro-tat-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-
-                <!-- Row 2: rotateField (GSSteppingTextField) -->
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-ro-tat" customClass="GSSteppingTextField">
-                    <rect key="frame" x="134" y="54" width="96" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="fld-ro-tat-c">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-ro-tat" customClass="GSSteppingTextField">
+                    <rect key="frame" x="134" y="55" width="113" height="25"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="fld-ro-tat-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -74,24 +63,9 @@
                         <action selector="setRandomRotate:" target="-2" id="act-ro-tat"/>
                     </connections>
                 </textField>
-
-                <!-- Row 3: Random Offset label -->
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-of-fst">
-                    <rect key="frame" x="18" y="27" width="108" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="17" id="lbl-of-fst-h"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Random Offset" id="lbl-of-fst-c">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-
-                <!-- Row 3: offsetField (GSSteppingTextField) -->
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-of-fst" customClass="GSSteppingTextField">
-                    <rect key="frame" x="134" y="24" width="96" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="fld-of-fst-c">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-of-fst" customClass="GSSteppingTextField">
+                    <rect key="frame" x="134" y="20" width="113" height="25"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="fld-of-fst-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -100,41 +74,39 @@
                         <action selector="setRandomOffset:" target="-2" id="act-of-fst"/>
                     </connections>
                 </textField>
-
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-of-fst">
+                    <rect key="frame" x="33" y="23" width="95" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Random Offset" id="lbl-of-fst-c">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
-                <!-- View top → Row 1 label top -->
-                <constraint firstItem="lbl-su-btr" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="con-top-v-r1"/>
-                <!-- View leading → Row 1 label leading (all labels share this) -->
-                <constraint firstItem="lbl-su-btr" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="con-lead-v-r1"/>
-                <constraint firstItem="lbl-ro-tat" firstAttribute="leading" secondItem="lbl-su-btr" secondAttribute="leading" id="con-lead-r2-r1"/>
-                <constraint firstItem="lbl-of-fst" firstAttribute="leading" secondItem="lbl-su-btr" secondAttribute="leading" id="con-lead-r3-r1"/>
-                <!-- Row 1 label trailing → Row 1 field leading -->
-                <constraint firstItem="fld-su-btr" firstAttribute="leading" secondItem="lbl-su-btr" secondAttribute="trailing" constant="8" symbolic="YES" id="con-lead-f1-l1"/>
-                <!-- Row 1 field trailing → View trailing -->
-                <constraint firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing" constant="20" symbolic="YES" id="con-trail-v-f1"/>
-                <!-- All fields share same leading and trailing as Row 1 field -->
-                <constraint firstItem="fld-ro-tat" firstAttribute="leading" secondItem="fld-su-btr" secondAttribute="leading" id="con-lead-f2-f1"/>
-                <constraint firstItem="fld-of-fst" firstAttribute="leading" secondItem="fld-su-btr" secondAttribute="leading" id="con-lead-f3-f1"/>
-                <constraint firstItem="fld-ro-tat" firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing" id="con-trail-f2-f1"/>
-                <constraint firstItem="fld-of-fst" firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing" id="con-trail-f3-f1"/>
-                <!-- Row 1 label baseline = Row 1 field baseline -->
-                <constraint firstItem="lbl-su-btr" firstAttribute="baseline" secondItem="fld-su-btr" secondAttribute="baseline" id="con-base-r1"/>
-                <constraint firstItem="lbl-su-btr" firstAttribute="firstBaseline" secondItem="fld-su-btr" secondAttribute="firstBaseline" id="con-fbase-r1"/>
-                <!-- Row 2 top = Row 1 label bottom + standard gap -->
-                <constraint firstItem="lbl-ro-tat" firstAttribute="top" secondItem="lbl-su-btr" secondAttribute="bottom" constant="8" symbolic="YES" id="con-top-r2-r1"/>
-                <!-- Row 2 label baseline = Row 2 field baseline -->
-                <constraint firstItem="lbl-ro-tat" firstAttribute="baseline" secondItem="fld-ro-tat" secondAttribute="baseline" id="con-base-r2"/>
-                <constraint firstItem="lbl-ro-tat" firstAttribute="firstBaseline" secondItem="fld-ro-tat" secondAttribute="firstBaseline" id="con-fbase-r2"/>
-                <!-- Row 3 top = Row 2 label bottom + standard gap -->
-                <constraint firstItem="lbl-of-fst" firstAttribute="top" secondItem="lbl-ro-tat" secondAttribute="bottom" constant="8" symbolic="YES" id="con-top-r3-r2"/>
-                <!-- Row 3 label baseline = Row 3 field baseline -->
-                <constraint firstItem="lbl-of-fst" firstAttribute="baseline" secondItem="fld-of-fst" secondAttribute="baseline" id="con-base-r3"/>
-                <constraint firstItem="lbl-of-fst" firstAttribute="firstBaseline" secondItem="fld-of-fst" secondAttribute="firstBaseline" id="con-fbase-r3"/>
-                <!-- View bottom = Row 3 field bottom + standard gap -->
-                <constraint firstAttribute="bottom" secondItem="fld-of-fst" secondAttribute="bottom" constant="20" symbolic="YES" id="con-bot-v-r3"/>
+                <constraint firstItem="fld-of-fst" firstAttribute="baseline" secondItem="lbl-of-fst" secondAttribute="firstBaseline" id="2nO-uV-OMI"/>
+                <constraint firstItem="fld-of-fst" firstAttribute="top" secondItem="fld-ro-tat" secondAttribute="bottom" constant="10" symbolic="YES" id="3gM-Oo-Ii2"/>
+                <constraint firstAttribute="bottom" secondItem="lbl-of-fst" secondAttribute="bottom" constant="23" id="810-OS-pxx"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="leading" secondItem="lbl-su-btr" secondAttribute="trailing" constant="8" symbolic="YES" id="Czg-uM-WSq"/>
+                <constraint firstItem="lbl-ro-tat" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="33" id="GGt-OD-cAg"/>
+                <constraint firstItem="lbl-of-fst" firstAttribute="top" secondItem="lbl-ro-tat" secondAttribute="bottom" constant="18" id="GpM-uI-f3r"/>
+                <constraint firstItem="lbl-su-btr" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="HFc-yQ-Kzk"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="leading" secondItem="fld-of-fst" secondAttribute="leading" id="ITa-Mb-t1o"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="baseline" secondItem="lbl-su-btr" secondAttribute="firstBaseline" id="JZI-WB-Yoq"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="leading" secondItem="fld-ro-tat" secondAttribute="leading" id="N4Q-r4-Ws2"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="top" secondItem="fld-su-btr" secondAttribute="bottom" constant="10" symbolic="YES" id="Qlv-s2-osC"/>
+                <constraint firstItem="lbl-ro-tat" firstAttribute="trailing" secondItem="lbl-su-btr" secondAttribute="trailing" id="Tjp-gG-N14"/>
+                <constraint firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing" constant="20" symbolic="YES" id="ZG7-k4-BcP"/>
+                <constraint firstItem="lbl-su-btr" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="apq-MT-SOx"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="top" secondItem="1" secondAttribute="top" constant="15" id="cJb-eC-Ldn"/>
+                <constraint firstItem="lbl-ro-tat" firstAttribute="top" secondItem="lbl-su-btr" secondAttribute="bottom" constant="18" id="cip-Oz-F3H"/>
+                <constraint firstAttribute="bottom" secondItem="fld-of-fst" secondAttribute="bottom" constant="20" symbolic="YES" id="ddU-0H-ZRt"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="baseline" secondItem="lbl-ro-tat" secondAttribute="firstBaseline" id="f5W-ym-GoX"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="trailing" secondItem="fld-of-fst" secondAttribute="trailing" id="l68-QV-sBx"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="trailing" secondItem="fld-ro-tat" secondAttribute="trailing" id="n8M-nF-OB7"/>
+                <constraint firstItem="lbl-of-fst" firstAttribute="trailing" secondItem="lbl-su-btr" secondAttribute="trailing" id="xda-3P-dbt"/>
             </constraints>
-            <point key="canvasLocation" x="88.5" y="220.5"/>
+            <point key="canvasLocation" x="96.5" y="230"/>
         </customView>
     </objects>
 </document>
