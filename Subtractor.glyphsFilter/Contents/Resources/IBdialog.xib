@@ -131,8 +131,8 @@
                 <!-- Row 3 label baseline = Row 3 field baseline -->
                 <constraint firstItem="lbl-of-fst" firstAttribute="baseline" secondItem="fld-of-fst" secondAttribute="baseline" id="con-base-r3"/>
                 <constraint firstItem="lbl-of-fst" firstAttribute="firstBaseline" secondItem="fld-of-fst" secondAttribute="firstBaseline" id="con-fbase-r3"/>
-                <!-- View bottom = Row 3 label bottom + standard gap -->
-                <constraint firstAttribute="bottom" secondItem="lbl-of-fst" secondAttribute="bottom" constant="20" symbolic="YES" id="con-bot-v-r3"/>
+                <!-- View bottom = Row 3 field bottom + standard gap -->
+                <constraint firstAttribute="bottom" secondItem="fld-of-fst" secondAttribute="bottom" constant="20" symbolic="YES" id="con-bot-v-r3"/>
             </constraints>
             <point key="canvasLocation" x="88.5" y="220.5"/>
         </customView>

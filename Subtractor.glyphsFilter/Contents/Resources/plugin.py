@@ -114,14 +114,14 @@ class Subtractor(FilterWithDialog):
 			'es': 'Sustractor',
 		})
 		self.actionButtonLabel = Glyphs.localize({
-			'en': 'Apply',
-			'de': 'Anwenden',
-			'fr': 'Appliquer',
-			'es': 'Aplicar',
-			'pt': 'Aplique',
-			'jp': '申し込む',
-			'ko': '대다',
-			'zh': '应用',
+			'en': 'Subtract',
+			'de': 'Subtrahieren',
+			'fr': 'Soustraire',
+			'es': 'Sustraer',
+			'pt': 'Subtrair',
+			'jp': '削除',
+			'ko': '빼기',
+			'zh': '减去',
 		})
 		# Load dialog from .nib (without .extension)
 		self.loadNib('IBdialog', __file__)
