@@ -35,7 +35,7 @@ When applied as a custom parameter (during batch export), the following glyphs a
 
 - All glyphs whose name starts with the *Subtract Shapes* prefix
 - `.notdef`
-- The Apple glyph (`uniF8FF`)
+- The Apple glyph (`uniF8FF`), which many foundries use for their own logo
 - Empty glyphs (no outlines or components on the layer)
 
 Keep in mind that boolean operations are CPU-intensive, so exporting a whole font with this effect may take some time.
