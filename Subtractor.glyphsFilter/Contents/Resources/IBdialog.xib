@@ -7,21 +7,21 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Subtractor">
             <connections>
+                <outlet property="centerBoundsField" destination="chk-ce-bb" id="out-ce-bb"/>
                 <outlet property="dialog" destination="1" id="out-dg-sub"/>
                 <outlet property="offsetField" destination="fld-of-fst" id="out-of-fst"/>
                 <outlet property="rotateField" destination="fld-ro-tat" id="out-ro-tat"/>
                 <outlet property="subtractField" destination="fld-su-btr" id="out-su-btr"/>
-                <outlet property="centerBoundsField" destination="chk-ce-bb" id="out-ce-bb"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1">
-            <rect key="frame" x="0.0" y="0.0" width="267" height="130"/>
+            <rect key="frame" x="0.0" y="0.0" width="267" height="166"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-su-btr">
-                    <rect key="frame" x="18" y="93" width="110" height="17"/>
+                    <rect key="frame" x="18" y="129" width="110" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="Vpt-DV-6WY"/>
                     </constraints>
@@ -32,7 +32,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-su-btr">
-                    <rect key="frame" x="134" y="90" width="113" height="25"/>
+                    <rect key="frame" x="134" y="126" width="113" height="25"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="fld-su-btr-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -43,7 +43,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-ro-tat">
-                    <rect key="frame" x="31" y="58" width="97" height="17"/>
+                    <rect key="frame" x="31" y="94" width="97" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="gWE-0L-4ix"/>
                     </constraints>
@@ -54,7 +54,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-ro-tat" customClass="GSSteppingTextField">
-                    <rect key="frame" x="134" y="55" width="113" height="25"/>
+                    <rect key="frame" x="134" y="91" width="113" height="25"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="fld-ro-tat-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +65,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fld-of-fst" customClass="GSSteppingTextField">
-                    <rect key="frame" x="134" y="20" width="113" height="25"/>
+                    <rect key="frame" x="134" y="56" width="113" height="25"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="fld-of-fst-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -76,16 +76,15 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-of-fst">
-                    <rect key="frame" x="33" y="23" width="95" height="17"/>
+                    <rect key="frame" x="33" y="60" width="95" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Random Offset" id="lbl-of-fst-c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <!-- Row 4: Center Bounding Boxes checkbox -->
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="chk-ce-bb">
-                    <rect key="frame" x="20" y="2" width="227" height="14"/>
+                    <rect key="frame" x="20" y="20" width="227" height="28"/>
                     <buttonCell key="cell" type="check" title="Center Bounding Boxes" bezelStyle="regularSquare" imagePosition="left" inset="2" id="chk-ce-bb-c">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -98,11 +97,6 @@
             <constraints>
                 <constraint firstItem="fld-of-fst" firstAttribute="baseline" secondItem="lbl-of-fst" secondAttribute="firstBaseline" id="2nO-uV-OMI"/>
                 <constraint firstItem="fld-of-fst" firstAttribute="top" secondItem="fld-ro-tat" secondAttribute="bottom" constant="10" symbolic="YES" id="3gM-Oo-Ii2"/>
-                <!-- Row 4: checkbox top = offsetField bottom + 10 (matches field spacing) -->
-                <constraint firstItem="chk-ce-bb" firstAttribute="top" secondItem="fld-of-fst" secondAttribute="bottom" constant="10" symbolic="YES" id="con-top-cb-f3"/>
-                <!-- Checkbox spans the full content column -->
-                <constraint firstItem="chk-ce-bb" firstAttribute="leading" secondItem="lbl-su-btr" secondAttribute="leading" id="con-lead-cb"/>
-                <constraint firstItem="chk-ce-bb" firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing" id="con-trail-cb"/>
                 <constraint firstItem="fld-su-btr" firstAttribute="leading" secondItem="lbl-su-btr" secondAttribute="trailing" constant="8" symbolic="YES" id="Czg-uM-WSq"/>
                 <constraint firstItem="lbl-ro-tat" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="33" id="GGt-OD-cAg"/>
                 <constraint firstItem="lbl-of-fst" firstAttribute="top" secondItem="lbl-ro-tat" secondAttribute="bottom" constant="18" id="GpM-uI-f3r"/>
@@ -116,14 +110,16 @@
                 <constraint firstItem="lbl-su-btr" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="apq-MT-SOx"/>
                 <constraint firstItem="fld-su-btr" firstAttribute="top" secondItem="1" secondAttribute="top" constant="15" id="cJb-eC-Ldn"/>
                 <constraint firstItem="lbl-ro-tat" firstAttribute="top" secondItem="lbl-su-btr" secondAttribute="bottom" constant="18" id="cip-Oz-F3H"/>
-                <!-- View bottom = checkbox bottom + standard gap -->
                 <constraint firstAttribute="bottom" secondItem="chk-ce-bb" secondAttribute="bottom" constant="20" symbolic="YES" id="con-bot-cb"/>
+                <constraint firstItem="chk-ce-bb" firstAttribute="leading" secondItem="lbl-su-btr" secondAttribute="leading" id="con-lead-cb"/>
+                <constraint firstItem="chk-ce-bb" firstAttribute="top" secondItem="fld-of-fst" secondAttribute="bottom" constant="8" symbolic="YES" id="con-top-cb-f3"/>
+                <constraint firstItem="chk-ce-bb" firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing" id="con-trail-cb"/>
                 <constraint firstItem="fld-ro-tat" firstAttribute="baseline" secondItem="lbl-ro-tat" secondAttribute="firstBaseline" id="f5W-ym-GoX"/>
                 <constraint firstItem="fld-ro-tat" firstAttribute="trailing" secondItem="fld-of-fst" secondAttribute="trailing" id="l68-QV-sBx"/>
                 <constraint firstItem="fld-su-btr" firstAttribute="trailing" secondItem="fld-ro-tat" secondAttribute="trailing" id="n8M-nF-OB7"/>
                 <constraint firstItem="lbl-of-fst" firstAttribute="trailing" secondItem="lbl-su-btr" secondAttribute="trailing" id="xda-3P-dbt"/>
             </constraints>
-            <point key="canvasLocation" x="96.5" y="230"/>
+            <point key="canvasLocation" x="96.5" y="236"/>
         </customView>
     </objects>
 </document>
