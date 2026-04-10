@@ -9,7 +9,7 @@ Effect plug-in for the [Glyphs.app](https://www.glyphsapp.com) font editor for s
 
 ## Usage
 
-The filter subtracts shapes from the affected glyph layers. The shapes to be subtracted come from special glyphs in your font file named `_subtract`, or with a dot suffix such as `_subtract.rough` or `_subtract.edge`. If multiple subtract glyphs are present, one is chosen at random each time the filter is applied, creating natural variation across glyphs.
+The filter boolean-subtracts shapes from the affected glyph layers. The shapes come from special glyphs in your font named `_subtract`, or with a dot suffix such as `_subtract.rough` or `_subtract.edge`. If multiple subtract glyphs are present, one is chosen at random each time the filter is applied, creating natural variation across glyphs.
 
 ### Preparing subtract glyphs
 
@@ -17,17 +17,23 @@ The filter subtracts shapes from the affected glyph layers. The shapes to be sub
 2. Draw the shapes you want to subtract from your glyphs in that special glyph.
 3. Apply *Filter > Subtractor* to the glyph layers you want to process.
 
+### Settings
+
+- **Subtract Shapes:** Name prefix of the subtract glyphs in your font. Default: `_subtract`. Change this if you want to use a different set of shapes for different effects.
+- **Random Rotate:** Maximum rotation angle in degrees. The subtract shape is rotated by a random amount between −*n*° and +*n*° around its bounding-box centre before subtracting. Default: `5`.
+- **Random Offset:** Maximum displacement in font units. The subtract shape is shifted by a random amount up to ±*n* units in both X and Y before subtracting. Default: `20`.
+
 ### Notes
 
-- **Multiple subtract glyphs**: If several `_subtract*` glyphs exist (e.g., `_subtract`, `_subtract.variant1`, `_subtract.rough`), one is picked at random on each application, giving you varied results across different glyphs or repeated runs.
-- **Components**: Components in `_subtract` glyphs are automatically decomposed before the subtraction.
-- **Masters**: The subtract glyph layer matching the current master is used. If no matching master layer exists, the first available layer is used as a fallback.
+- **Multiple subtract glyphs:** If several glyphs match the prefix (e.g., `_subtract`, `_subtract.variant1`, `_subtract.rough`), one is picked at random on each application for natural variation.
+- **Components:** Components inside `_subtract` glyphs are automatically decomposed before the subtraction.
+- **Masters:** The layer matching the current master is used. If no matching master layer exists, the first available layer is used as a fallback.
 
-You can also add the filter as a custom parameter to one of your (static) instances in *Font Info > Exports.* Use the actions menu in the lower left to copy the parameter name into the clipboard for pasting in Font Info.
+You can also add the filter as a custom parameter to one of your (static) instances in *Font Info > Exports.* Use the actions menu in the lower left to copy the current settings as a custom parameter into the clipboard, then paste it in Font Info.
 
 When applied as a custom parameter (during batch export), the following glyphs are always excluded from processing:
 
-- All `_subtract*` glyphs
+- All glyphs whose name starts with the *Subtract Shapes* prefix
 - `.notdef`
 - The Apple glyph (`uniF8FF`)
 - Empty glyphs (no outlines or components on the layer)
