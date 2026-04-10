@@ -32,20 +32,47 @@ def getSubtractGlyphs(font, prefix='_subtract'):
 	        if g.name == prefix or g.name.startswith(prefix + '.')]
 
 
+def getLayerCenter(layer):
+	"""Compute bbox centre from node positions (works on detached layers)."""
+	minX = minY = float('inf')
+	maxX = maxY = float('-inf')
+	for shape in layer.shapes:
+		if isinstance(shape, GSPath):
+			for node in shape.nodes:
+				x, y = node.position.x, node.position.y
+				if x < minX: minX = x
+				if x > maxX: maxX = x
+				if y < minY: minY = y
+				if y > maxY: maxY = y
+	if minX == float('inf'):
+		return None
+	return ((minX + maxX) / 2.0, (minY + maxY) / 2.0)
+
+
+def applyTransformToLayer(layer, transform):
+	"""Apply affine transform to each GSPath in layer individually."""
+	for shape in layer.shapes:
+		if isinstance(shape, GSPath):
+			shape.applyTransform(transform)
+
+
 def centerOnTarget(subtractCopy, targetLayer):
 	"""Translate subtractCopy so its bbox centre aligns with targetLayer's bbox centre."""
-	sb = subtractCopy.bounds
-	tb = targetLayer.bounds
-	dx = (tb.origin.x + tb.size.width  / 2.0) - (sb.origin.x + sb.size.width  / 2.0)
-	dy = (tb.origin.y + tb.size.height / 2.0) - (sb.origin.y + sb.size.height / 2.0)
-	subtractCopy.applyTransform((1, 0, 0, 1, dx, dy))
+	sc = getLayerCenter(subtractCopy)
+	tc = getLayerCenter(targetLayer)
+	if sc is None or tc is None:
+		return
+	dx = tc[0] - sc[0]
+	dy = tc[1] - sc[1]
+	applyTransformToLayer(subtractCopy, (1, 0, 0, 1, dx, dy))
 
 
 def applyRandomTransform(layer, maxRotate, maxOffset):
 	"""Randomly rotate (around bbox centre) and offset all shapes in layer."""
-	bounds = layer.bounds
-	cx = bounds.origin.x + bounds.size.width / 2.0
-	cy = bounds.origin.y + bounds.size.height / 2.0
+	center = getLayerCenter(layer)
+	if center is None:
+		return
+	cx, cy = center
 	angle = radians(uniform(-maxRotate, maxRotate))
 	dx = uniform(-maxOffset, maxOffset)
 	dy = uniform(-maxOffset, maxOffset)
@@ -54,7 +81,7 @@ def applyRandomTransform(layer, maxRotate, maxOffset):
 	# Rotate around (cx, cy), then translate by (dx, dy)
 	tX = cx * (1.0 - cosA) + cy * sinA + dx
 	tY = cy * (1.0 - cosA) - cx * sinA + dy
-	layer.applyTransform((cosA, sinA, -sinA, cosA, tX, tY))
+	applyTransformToLayer(layer, (cosA, sinA, -sinA, cosA, tX, tY))
 
 
 def subtractFromLayer(targetLayer, subtractLayer, maxRotate=0.0, maxOffset=0.0, centerBounds=False):
