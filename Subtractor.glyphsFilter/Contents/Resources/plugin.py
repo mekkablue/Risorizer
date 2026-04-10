@@ -29,7 +29,9 @@ EXCLUDED_GLYPH_NAMES = frozenset(['.notdef', 'uniF8FF', 'apple'])
 def getSubtractGlyphs(font, prefix='_subtract'):
 	"""Return glyphs named exactly prefix or prefix.xxx from the font."""
 	return [g for g in font.glyphs
-	        if g.name == prefix or g.name.startswith(prefix + '.')]
+			if g.name == prefix
+			or g.name.startswith(prefix + '.')
+			]
 
 
 def getLayerCenter(layer):
@@ -148,13 +150,13 @@ class Subtractor(FilterWithDialog):
 	def settings(self):
 		self.menuName = Glyphs.localize({
 			'en': 'Subtractor',
-			'de': 'Subtrahieren',
+			'de': 'Abzieher',
 			'fr': 'Soustracteur',
 			'es': 'Sustractor',
 		})
 		self.actionButtonLabel = Glyphs.localize({
 			'en': 'Subtract',
-			'de': 'Subtrahieren',
+			'de': 'Abziehen',
 			'fr': 'Soustraire',
 			'es': 'Sustraer',
 			'pt': 'Subtrair',
@@ -185,6 +187,7 @@ class Subtractor(FilterWithDialog):
 		self.subtractField.becomeFirstResponder()
 
 
+	# Update prefs with user-entered values:
 	@objc.IBAction
 	def setSubtractShapes_(self, sender):
 		Glyphs.defaults[self.prefName('subtractShapes')] = sender.stringValue()
@@ -210,6 +213,14 @@ class Subtractor(FilterWithDialog):
 	@objc.python_method
 	def filter(self, layer, inEditView, customParameters):
 		try:
+			# avoid processing newlines in Edit view:
+			if not isinstance(layer, GSLayer):
+				return
+
+			# skip empty layers
+			if not layer.shapes:
+				return
+
 			glyphName = layer.parent.name
 
 			# Defaults
@@ -219,6 +230,10 @@ class Subtractor(FilterWithDialog):
 			centerBounds   = False
 
 			if not inEditView:
+				# always skip predefined exclusions
+				if glyphName in EXCLUDED_GLYPH_NAMES:
+					return
+
 				# Batch export via custom parameter — read settings and apply exclusions
 				if 'subtractShapes' in customParameters:
 					subtractShapes = str(customParameters['subtractShapes'])
@@ -229,11 +244,8 @@ class Subtractor(FilterWithDialog):
 				if 'centerBounds' in customParameters:
 					centerBounds = bool(int(customParameters['centerBounds']))
 
-				if glyphName in EXCLUDED_GLYPH_NAMES:
-					return
+				# do not subtract from subtract shapes
 				if glyphName.startswith(subtractShapes):
-					return
-				if not layer.shapes:
 					return
 			else:
 				# Interactive — read stored preferences
