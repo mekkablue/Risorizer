@@ -32,6 +32,15 @@ def getSubtractGlyphs(font, prefix='_subtract'):
 	        if g.name == prefix or g.name.startswith(prefix + '.')]
 
 
+def centerOnTarget(subtractCopy, targetLayer):
+	"""Translate subtractCopy so its bbox centre aligns with targetLayer's bbox centre."""
+	sb = subtractCopy.bounds
+	tb = targetLayer.bounds
+	dx = (tb.origin.x + tb.size.width  / 2.0) - (sb.origin.x + sb.size.width  / 2.0)
+	dy = (tb.origin.y + tb.size.height / 2.0) - (sb.origin.y + sb.size.height / 2.0)
+	subtractCopy.applyTransform((1, 0, 0, 1, dx, dy))
+
+
 def applyRandomTransform(layer, maxRotate, maxOffset):
 	"""Randomly rotate (around bbox centre) and offset all shapes in layer."""
 	bounds = layer.bounds
@@ -48,7 +57,7 @@ def applyRandomTransform(layer, maxRotate, maxOffset):
 	layer.applyTransform((cosA, sinA, -sinA, cosA, tX, tY))
 
 
-def subtractFromLayer(targetLayer, subtractLayer, maxRotate=0.0, maxOffset=0.0):
+def subtractFromLayer(targetLayer, subtractLayer, maxRotate=0.0, maxOffset=0.0, centerBounds=False):
 	"""
 	Boolean-subtract subtractLayer's shapes from targetLayer.
 	Mirrors the subtract=YES branch in Risorizer.m (processLayer:…subtract:).
@@ -61,7 +70,9 @@ def subtractFromLayer(targetLayer, subtractLayer, maxRotate=0.0, maxOffset=0.0):
 	subtractCopy.removeOverlap()
 	subtractCopy.correctPathDirection()
 
-	# 3. Apply random rotation and offset before subtracting
+	# 3. Optionally centre subtract shape on target, then rotate and offset
+	if centerBounds:
+		centerOnTarget(subtractCopy, targetLayer)
 	if maxRotate != 0.0 or maxOffset != 0.0:
 		applyRandomTransform(subtractCopy, maxRotate, maxOffset)
 
@@ -89,10 +100,11 @@ class Subtractor(FilterWithDialog):
 	# The NSView object from the User Interface. Keep this here!
 	dialog = objc.IBOutlet()
 
-	# Text fields in dialog
-	subtractField = objc.IBOutlet()
-	rotateField   = objc.IBOutlet()
-	offsetField   = objc.IBOutlet()
+	# Text fields and checkbox in dialog
+	subtractField     = objc.IBOutlet()
+	rotateField       = objc.IBOutlet()
+	offsetField       = objc.IBOutlet()
+	centerBoundsField = objc.IBOutlet()
 
 
 	@objc.python_method
@@ -134,11 +146,13 @@ class Subtractor(FilterWithDialog):
 		Glyphs.registerDefault(self.prefName('subtractShapes'), '_subtract')
 		Glyphs.registerDefault(self.prefName('randomRotate'),   5.0)
 		Glyphs.registerDefault(self.prefName('randomOffset'),   20.0)
+		Glyphs.registerDefault(self.prefName('centerBounds'),   0)
 
 		# Populate fields
 		self.subtractField.setStringValue_(self.getPref('subtractShapes'))
 		self.rotateField.setStringValue_(self.getPref('randomRotate'))
 		self.offsetField.setStringValue_(self.getPref('randomOffset'))
+		self.centerBoundsField.setState_(int(self.getPref('centerBounds')))
 
 		# Focus first field
 		self.subtractField.becomeFirstResponder()
@@ -159,6 +173,11 @@ class Subtractor(FilterWithDialog):
 		Glyphs.defaults[self.prefName('randomOffset')] = sender.floatValue()
 		self.update()
 
+	@objc.IBAction
+	def setCenterBounds_(self, sender):
+		Glyphs.defaults[self.prefName('centerBounds')] = sender.state()
+		self.update()
+
 
 	# Actual filter
 	@objc.python_method
@@ -170,6 +189,7 @@ class Subtractor(FilterWithDialog):
 			subtractShapes = '_subtract'
 			maxRotate      = 5.0
 			maxOffset      = 20.0
+			centerBounds   = False
 
 			if not inEditView:
 				# Batch export via custom parameter — read settings and apply exclusions
@@ -179,6 +199,8 @@ class Subtractor(FilterWithDialog):
 					maxRotate = float(customParameters['randomRotate'])
 				if 'randomOffset' in customParameters:
 					maxOffset = float(customParameters['randomOffset'])
+				if 'centerBounds' in customParameters:
+					centerBounds = bool(int(customParameters['centerBounds']))
 
 				if glyphName in EXCLUDED_GLYPH_NAMES:
 					return
@@ -198,6 +220,10 @@ class Subtractor(FilterWithDialog):
 					pass
 				try:
 					maxOffset = float(self.getPref('randomOffset'))
+				except:
+					pass
+				try:
+					centerBounds = bool(int(self.getPref('centerBounds')))
 				except:
 					pass
 
@@ -226,7 +252,7 @@ class Subtractor(FilterWithDialog):
 			if subtractLayer is None or not subtractLayer.shapes:
 				return
 
-			subtractFromLayer(layer, subtractLayer, maxRotate, maxOffset)
+			subtractFromLayer(layer, subtractLayer, maxRotate, maxOffset, centerBounds)
 
 		except Exception as e:
 			import traceback
@@ -240,11 +266,12 @@ class Subtractor(FilterWithDialog):
 
 	@objc.python_method
 	def generateCustomParameter(self):
-		return "%s; subtractShapes:%s; randomRotate:%s; randomOffset:%s" % (
+		return "%s; subtractShapes:%s; randomRotate:%s; randomOffset:%s; centerBounds:%s" % (
 			self.__class__.__name__,
 			self.getPref('subtractShapes'),
 			self.getPref('randomRotate'),
 			self.getPref('randomOffset'),
+			int(self.getPref('centerBounds')),
 		)
 
 
