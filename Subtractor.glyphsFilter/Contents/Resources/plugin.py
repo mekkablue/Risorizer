@@ -14,6 +14,7 @@
 import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
+from Foundation import NSClassFromString, NSMutableArray
 from random import choice
 
 
@@ -29,23 +30,37 @@ def getSubtractGlyphs(font):
 
 def subtractFromLayer(targetLayer, subtractLayer):
 	"""
-	Subtract the shapes of subtractLayer from targetLayer.
-	Both layers are decomposed and have overlaps removed first.
-	The subtract shapes are then added to the target layer and
-	correctPathDirection() lets nested paths become counter-forms.
+	Boolean-subtract the shapes of subtractLayer from targetLayer.
+	Mirrors the subtract=YES branch in Risorizer.m (processLayer:…subtract:):
+	  1. Remove overlap on the target layer (decomposes components)
+	  2. Decompose and clean the subtract layer via copyDecomposedLayer + removeOverlap
+	  3. Call GSPathOperator.subtractPaths:from:error: for the actual boolean op
+	  4. Replace layer shapes with the result and correct path direction
 	"""
-	# Clean up the target layer in place
+	# 1. Clean target layer in place
 	targetLayer.removeOverlap()
 
-	# Get a clean, decomposed copy of the subtract shapes
+	# 2. Clean subtract shapes
 	subtractCopy = subtractLayer.copyDecomposedLayer()
 	subtractCopy.removeOverlap()
+	subtractCopy.correctPathDirection()
 
-	# Add subtract shapes to the target layer (no direction reversal)
-	for shape in subtractCopy.shapes:
-		targetLayer.shapes.append(shape)
+	# 3. Boolean subtraction via GSPathOperator (same class used by Risorizer.m)
+	subtrahends = NSMutableArray.arrayWithArray_(
+		[s for s in subtractCopy.shapes if isinstance(s, GSPath)]
+	)
+	minuends = NSMutableArray.arrayWithArray_(
+		[s for s in targetLayer.shapes if isinstance(s, GSPath)]
+	)
 
-	# Path direction correction turns overlapping inner shapes into holes
+	if not subtrahends or not minuends:
+		return
+
+	GSPathOperator = NSClassFromString("GSPathOperator")
+	GSPathOperator.subtractPaths_from_error_(subtrahends, minuends, None)
+
+	# 4. Put the result back and normalise directions
+	targetLayer.shapes = minuends
 	targetLayer.correctPathDirection()
 
 
