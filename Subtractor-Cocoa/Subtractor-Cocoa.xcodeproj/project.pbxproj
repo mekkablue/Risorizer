@@ -1,0 +1,294 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		222222222222222222220018 /* Subtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222222220011 /* Subtractor.m */; };
+		222222222222222222220019 /* Subtractor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222222222222222222220012 /* Subtractor.xib */; };
+		22222222222222222222001A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 222222222222222222220015 /* Cocoa.framework */; };
+		22222222222222222222001B /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 222222222222222222220016 /* GlyphsCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		222222222222222222220010 /* Subtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Subtractor.h; sourceTree = "<group>"; };
+		222222222222222222220011 /* Subtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Subtractor.m; sourceTree = "<group>"; };
+		222222222222222222220012 /* Subtractor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Subtractor.xib; sourceTree = "<group>"; };
+		222222222222222222220013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		222222222222222222220014 /* Subtractor-Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Subtractor-Cocoa-Prefix.pch"; sourceTree = "<group>"; };
+		222222222222222222220015 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		222222222222222222220016 /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = "/Applications/Glyphs 3.app/Contents/Frameworks/GlyphsCore.framework"; sourceTree = "<absolute>"; };
+		222222222222222222220017 /* Subtractor.glyphsFilter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Subtractor.glyphsFilter; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		22222222222222222222000A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22222222222222222222001A /* Cocoa.framework in Frameworks */,
+				22222222222222222222001B /* GlyphsCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		22222222222222222222000C = {
+			isa = PBXGroup;
+			children = (
+				22222222222222222222000F /* Subtractor-Cocoa */,
+				22222222222222222222000D /* Products */,
+				22222222222222222222000E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		22222222222222222222000D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				222222222222222222220017 /* Subtractor.glyphsFilter */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		22222222222222222222000E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				222222222222222222220015 /* Cocoa.framework */,
+				222222222222222222220016 /* GlyphsCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		22222222222222222222000F /* Subtractor-Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				222222222222222222220010 /* Subtractor.h */,
+				222222222222222222220011 /* Subtractor.m */,
+				222222222222222222220012 /* Subtractor.xib */,
+				222222222222222222220013 /* Info.plist */,
+				222222222222222222220014 /* Subtractor-Cocoa-Prefix.pch */,
+			);
+			path = "Subtractor-Cocoa";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		222222222222222222220002 /* Subtractor-Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 222222222222222222220008 /* Build configuration list for PBXNativeTarget "Subtractor-Cocoa" */;
+			buildPhases = (
+				222222222222222222220009 /* Sources */,
+				22222222222222222222000A /* Frameworks */,
+				22222222222222222222000B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Subtractor-Cocoa";
+			productName = Subtractor;
+			productReference = 222222222222222222220017 /* Subtractor.glyphsFilter */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		222222222222222222220001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					222222222222222222220002 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 222222222222222222220005 /* Build configuration list for PBXProject "Subtractor-Cocoa" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 22222222222222222222000C;
+			productRefGroup = 22222222222222222222000D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				222222222222222222220002 /* Subtractor-Cocoa */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		22222222222222222222000B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				222222222222222222220019 /* Subtractor.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		222222222222222222220009 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				222222222222222222220018 /* Subtractor.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		222222222222222222220003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		222222222222222222220004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		222222222222222222220006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Applications/Glyphs 3.app/Contents/Frameworks\"",
+				);
+				GCC_PREFIX_HEADER = "Subtractor-Cocoa/Subtractor-Cocoa-Prefix.pch";
+				INFOPLIST_FILE = "Subtractor-Cocoa/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Subtractor;
+				PRODUCT_NAME = Subtractor;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = glyphsFilter;
+			};
+			name = Debug;
+		};
+		222222222222222222220007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Applications/Glyphs 3.app/Contents/Frameworks\"",
+				);
+				GCC_PREFIX_HEADER = "Subtractor-Cocoa/Subtractor-Cocoa-Prefix.pch";
+				INFOPLIST_FILE = "Subtractor-Cocoa/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Subtractor;
+				PRODUCT_NAME = Subtractor;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = glyphsFilter;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		222222222222222222220005 /* Build configuration list for PBXProject "Subtractor-Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				222222222222222222220003 /* Debug */,
+				222222222222222222220004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		222222222222222222220008 /* Build configuration list for PBXNativeTarget "Subtractor-Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				222222222222222222220006 /* Debug */,
+				222222222222222222220007 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 222222222222222222220001 /* Project object */;
+}

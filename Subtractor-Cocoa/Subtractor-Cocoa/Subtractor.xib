@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="Subtractor">
+            <connections>
+                <outlet property="view"              destination="1"          id="out-view"/>
+                <outlet property="subtractField"     destination="fld-su-btr" id="out-su-btr"/>
+                <outlet property="rotateField"       destination="fld-ro-tat" id="out-ro-tat"/>
+                <outlet property="offsetField"       destination="fld-of-fst" id="out-of-fst"/>
+                <outlet property="centerBoundsField" destination="chk-ce-bb"  id="out-ce-bb"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"     customClass="NSObject"/>
+        <customView id="1">
+            <rect key="frame" x="0.0" y="0.0" width="267" height="166"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+
+                <!-- Row 1: Subtract Shapes -->
+                <textField focusRingType="none"
+                           horizontalHuggingPriority="251"
+                           verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           toolTip="Name prefix of the subtract glyphs. Use a glyph named exactly this, or with a dot suffix (e.g., _subtract.rough). If multiple glyphs match, one is picked at random."
+                           id="lbl-su-btr">
+                    <rect key="frame" x="18" y="129" width="110" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="Vpt-DV-6WY"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
+                                   sendsActionOnEndEditing="YES" alignment="right"
+                                   title="Subtract Shapes" id="lbl-su-btr-c">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor"       name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor"     catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField focusRingType="none"
+                           verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           toolTip="Name prefix of the subtract glyphs. Use a glyph named exactly this, or with a dot suffix (e.g., _subtract.rough). If multiple glyphs match, one is picked at random."
+                           id="fld-su-btr">
+                    <rect key="frame" x="134" y="126" width="113" height="25"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
+                                   selectable="YES" editable="YES" continuous="YES"
+                                   sendsActionOnEndEditing="YES" state="on"
+                                   borderStyle="bezel" alignment="left" drawsBackground="YES"
+                                   id="fld-su-btr-c">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor"       name="controlTextColor"   catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="setSubtractShapes:" target="-2" id="act-su-btr"/>
+                    </connections>
+                </textField>
+
+                <!-- Row 2: Random Rotate -->
+                <textField focusRingType="none"
+                           horizontalHuggingPriority="251"
+                           verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           toolTip="Maximum rotation in degrees. The subtract shape is rotated by a random amount between −n° and +n° around its bounding-box centre before subtracting. Set to 0 to disable."
+                           id="lbl-ro-tat">
+                    <rect key="frame" x="31" y="94" width="97" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="gWE-0L-4ix"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
+                                   sendsActionOnEndEditing="YES" alignment="right"
+                                   title="Random Rotate" id="lbl-ro-tat-c">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor"       name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor"     catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField focusRingType="none"
+                           verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           toolTip="Maximum rotation in degrees. The subtract shape is rotated by a random amount between −n° and +n° around its bounding-box centre before subtracting. Set to 0 to disable."
+                           id="fld-ro-tat"
+                           customClass="GSSteppingTextField">
+                    <rect key="frame" x="134" y="91" width="113" height="25"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
+                                   selectable="YES" editable="YES" continuous="YES"
+                                   sendsActionOnEndEditing="YES" state="on"
+                                   borderStyle="bezel" alignment="right" drawsBackground="YES"
+                                   id="fld-ro-tat-c">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor"       name="controlTextColor"   catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="setRandomRotate:" target="-2" id="act-ro-tat"/>
+                    </connections>
+                </textField>
+
+                <!-- Row 3: Random Offset -->
+                <textField focusRingType="none"
+                           verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           toolTip="Maximum displacement in font units. The subtract shape is shifted by a random amount up to ±n units in both X and Y before subtracting. Set to 0 to disable."
+                           id="fld-of-fst"
+                           customClass="GSSteppingTextField">
+                    <rect key="frame" x="134" y="56" width="113" height="25"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
+                                   selectable="YES" editable="YES" continuous="YES"
+                                   sendsActionOnEndEditing="YES" state="on"
+                                   borderStyle="bezel" alignment="right" drawsBackground="YES"
+                                   id="fld-of-fst-c">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor"       name="controlTextColor"   catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="setRandomOffset:" target="-2" id="act-of-fst"/>
+                    </connections>
+                </textField>
+                <textField focusRingType="none"
+                           horizontalHuggingPriority="251"
+                           verticalHuggingPriority="750"
+                           translatesAutoresizingMaskIntoConstraints="NO"
+                           toolTip="Maximum displacement in font units. The subtract shape is shifted by a random amount up to ±n units in both X and Y before subtracting. Set to 0 to disable."
+                           id="lbl-of-fst">
+                    <rect key="frame" x="33" y="60" width="95" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping"
+                                   sendsActionOnEndEditing="YES" alignment="right"
+                                   title="Random Offset" id="lbl-of-fst-c">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor"       name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor"     catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+
+                <!-- Row 4: Center Bounding Boxes checkbox -->
+                <button translatesAutoresizingMaskIntoConstraints="NO"
+                        toolTip="When enabled, the subtract shape is centered over the target glyph's bounding box before rotation and offset are applied."
+                        id="chk-ce-bb">
+                    <rect key="frame" x="20" y="20" width="227" height="28"/>
+                    <buttonCell key="cell" type="check" title="Center Bounding Boxes"
+                                bezelStyle="regularSquare" imagePosition="left" inset="2"
+                                id="chk-ce-bb-c">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="setCenterBounds:" target="-2" id="act-ce-bb"/>
+                    </connections>
+                </button>
+
+            </subviews>
+            <constraints>
+                <!-- Column alignment: all fields share same leading/trailing -->
+                <constraint firstItem="fld-su-btr" firstAttribute="leading"  secondItem="lbl-su-btr" secondAttribute="trailing"  constant="8"  symbolic="YES" id="Czg-uM-WSq"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="leading"  secondItem="fld-ro-tat" secondAttribute="leading"               id="N4Q-r4-Ws2"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="trailing" secondItem="fld-ro-tat" secondAttribute="trailing"              id="n8M-nF-OB7"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="leading"  secondItem="fld-of-fst" secondAttribute="leading"               id="ITa-Mb-t1o"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="trailing" secondItem="fld-of-fst" secondAttribute="trailing"              id="l68-QV-sBx"/>
+
+                <!-- Label column alignment -->
+                <constraint firstItem="lbl-ro-tat" firstAttribute="trailing" secondItem="lbl-su-btr" secondAttribute="trailing"              id="Tjp-gG-N14"/>
+                <constraint firstItem="lbl-of-fst" firstAttribute="trailing" secondItem="lbl-su-btr" secondAttribute="trailing"              id="xda-3P-dbt"/>
+
+                <!-- Baselines -->
+                <constraint firstItem="fld-su-btr" firstAttribute="baseline" secondItem="lbl-su-btr" secondAttribute="firstBaseline"         id="JZI-WB-Yoq"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="baseline" secondItem="lbl-ro-tat" secondAttribute="firstBaseline"         id="f5W-ym-GoX"/>
+                <constraint firstItem="fld-of-fst" firstAttribute="baseline" secondItem="lbl-of-fst" secondAttribute="firstBaseline"         id="2nO-uV-OMI"/>
+
+                <!-- Vertical spacing between rows -->
+                <constraint firstItem="lbl-su-btr" firstAttribute="top"  secondItem="1"          secondAttribute="top"    constant="20" symbolic="YES" id="HFc-yQ-Kzk"/>
+                <constraint firstItem="fld-su-btr" firstAttribute="top"  secondItem="1"          secondAttribute="top"    constant="15"               id="cJb-eC-Ldn"/>
+                <constraint firstItem="lbl-ro-tat" firstAttribute="top"  secondItem="lbl-su-btr" secondAttribute="bottom" constant="18"               id="cip-Oz-F3H"/>
+                <constraint firstItem="fld-ro-tat" firstAttribute="top"  secondItem="fld-su-btr" secondAttribute="bottom" constant="10" symbolic="YES" id="Qlv-s2-osC"/>
+                <constraint firstItem="lbl-of-fst" firstAttribute="top"  secondItem="lbl-ro-tat" secondAttribute="bottom" constant="18"               id="GpM-uI-f3r"/>
+                <constraint firstItem="fld-of-fst" firstAttribute="top"  secondItem="fld-ro-tat" secondAttribute="bottom" constant="10" symbolic="YES" id="3gM-Oo-Ii2"/>
+                <constraint firstItem="chk-ce-bb"  firstAttribute="top"  secondItem="fld-of-fst" secondAttribute="bottom" constant="8"  symbolic="YES" id="con-top-cb-f3"/>
+
+                <!-- Horizontal anchors to superview -->
+                <constraint firstItem="lbl-su-btr" firstAttribute="leading"  secondItem="1" secondAttribute="leading"  constant="20" symbolic="YES" id="apq-MT-SOx"/>
+                <constraint firstItem="lbl-ro-tat" firstAttribute="leading"  secondItem="1" secondAttribute="leading"  constant="33"               id="GGt-OD-cAg"/>
+                <constraint firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing" constant="20" symbolic="YES"              id="ZG7-k4-BcP"/>
+
+                <!-- Checkbox spans full label-to-field column -->
+                <constraint firstItem="chk-ce-bb" firstAttribute="leading"  secondItem="lbl-su-btr" secondAttribute="leading"                    id="con-lead-cb"/>
+                <constraint firstItem="chk-ce-bb" firstAttribute="trailing" secondItem="fld-su-btr" secondAttribute="trailing"                   id="con-trail-cb"/>
+
+                <!-- View bottom pinned to checkbox bottom -->
+                <constraint firstAttribute="bottom" secondItem="chk-ce-bb" secondAttribute="bottom" constant="20" symbolic="YES"                  id="con-bot-cb"/>
+            </constraints>
+            <point key="canvasLocation" x="96.5" y="236"/>
+        </customView>
+    </objects>
+</document>
