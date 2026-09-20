@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1</string>
+	<string>2.2</string>
 	<key>CFBundleVersion</key>
-	<string>21</string>
+	<string>22</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright Rainer Erich Scheichelbauer, 2020–2026</string>
 	<key>NSMinimumSystemVersion</key>
@@ -29,6 +29,6 @@
 	<key>productPageURL</key>
 	<string>https://github.com/mekkablue/Risorizer</string>
 	<key>productReleaseNotes</key>
-	<string>Added Subtract option: boolean-subtracts debris from glyph paths instead of reversing path direction.</string>
+	<string>Rebuilt for Glyphs 4: the plug-in classes moved from GlyphsCore to the GlyphsApp framework, which is why older builds refused to load.</string>
 </dict>
 </plist>

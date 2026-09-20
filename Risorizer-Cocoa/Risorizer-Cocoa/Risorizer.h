@@ -6,28 +6,26 @@
 //  Adds random triangular debris/spots to glyph outlines (Risograph-like effect).
 //
 //  Based on the Python plugin by Rainer Erich Scheichelbauer (mekkablue).
-//  ObjC port: see GlyphsSDK Filter Plugin template and mekkablue/GreenHarmony2.
+//  ObjC port: see GlyphsSDK Filter Plugin template (branch Glyphs4).
 //
 
 #import <Cocoa/Cocoa.h>
-#import <GlyphsCore/GSFilterPlugin.h>
+
+// Glyphs 4 moved the plug-in base classes out of GlyphsCore and into the
+// GlyphsApp framework. GSFilterPlugin therefore has to be imported from
+// <GlyphsApp/…>, while the object model (GSFont, GSLayer, GSPath, …) stays
+// in GlyphsCore. Compare GlyphsSDK, branch Glyphs4:
+// Xcode Templates/Glyphs Dev/Glyphs Filter Plugin.xctemplate
+#import <GlyphsApp/GSFilterPlugin.h>
+#import <GlyphsCore/GlyphsCore.h>
+#import <GlyphsCore/GSFont.h>
+#import <GlyphsCore/GSFontMaster.h>
+#import <GlyphsCore/GSGlyph.h>
 #import <GlyphsCore/GSLayer.h>
 #import <GlyphsCore/GSPath.h>
 #import <GlyphsCore/GSNode.h>
-#import <GlyphsCore/GSGlyph.h>
-#import <GlyphsCore/GSFont.h>
-#import <GlyphsCore/GSFontMaster.h>
 
-@interface Risorizer : GSFilterPlugin {
-    // Current parameter values
-    CGFloat   _inset;
-    CGFloat   _density;
-    CGFloat   _size;
-    CGFloat   _minSize;
-    CGFloat   _variance;
-    NSInteger _distribute;
-    BOOL      _subtract;
-}
+@interface Risorizer : GSFilterPlugin
 
 @property (weak) IBOutlet NSTextField   *insetField;
 @property (weak) IBOutlet NSTextField   *densityField;

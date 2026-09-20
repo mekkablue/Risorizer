@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Risorizer">
             <connections>
-                <outlet property="view"            destination="RIZ-rt-vie" id="kzC-yw-bol"/>
+                <outlet property="_view"           destination="RIZ-rt-vie" id="kzC-yw-bol"/>
                 <outlet property="insetField"      destination="RIZ-f1-ins" id="BGR-rE-mng"/>
                 <outlet property="densityField"    destination="RIZ-f2-den" id="LBJ-LK-2eB"/>
                 <outlet property="sizeField"       destination="RIZ-f3-siz" id="mPy-Ck-cbS"/>

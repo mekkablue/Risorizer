@@ -25,6 +25,12 @@ You can also add the filter as custom parameter to one of your (static) instance
 
 Keep in mind it is CPU-intensive, so exporting a whole font with this effect will take some time.
 
+### Requirements
+
+The plug-in needs Glyphs 4 or higher, running on macOS 12 or later. It is built
+against the `GlyphsCore` and `GlyphsApp` frameworks inside `Glyphs 4.app`,
+because Glyphs 4 moved `GSFilterPlugin` from `GlyphsCore` into `GlyphsApp`.
+
 ### License
 
 Copyright 2020-2026 Rainer Erich Scheichelbauer (@mekkablue).

@@ -11,6 +11,7 @@
 		111111111111111111110019 /* Risorizer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111110012 /* Risorizer.xib */; };
 		11111111111111111111001A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110015 /* Cocoa.framework */; };
 		11111111111111111111001B /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111110016 /* GlyphsCore.framework */; };
+		11111111111111111111001C /* GlyphsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11111111111111111111001D /* GlyphsApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,7 +21,8 @@
 		111111111111111111110013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		111111111111111111110014 /* Risorizer-Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Risorizer-Cocoa-Prefix.pch"; sourceTree = "<group>"; };
 		111111111111111111110015 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		111111111111111111110016 /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = "/Applications/Glyphs 3.app/Contents/Frameworks/GlyphsCore.framework"; sourceTree = "<absolute>"; };
+		111111111111111111110016 /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = "/Applications/Glyphs 4.app/Contents/Frameworks/GlyphsCore.framework"; sourceTree = "<absolute>"; };
+		11111111111111111111001D /* GlyphsApp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsApp.framework; path = "/Applications/Glyphs 4.app/Contents/Frameworks/GlyphsApp.framework"; sourceTree = "<absolute>"; };
 		111111111111111111110017 /* Risorizer.glyphsFilter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Risorizer.glyphsFilter; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -31,6 +33,7 @@
 			files = (
 				11111111111111111111001A /* Cocoa.framework in Frameworks */,
 				11111111111111111111001B /* GlyphsCore.framework in Frameworks */,
+				11111111111111111111001C /* GlyphsApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +62,7 @@
 			children = (
 				111111111111111111110015 /* Cocoa.framework */,
 				111111111111111111110016 /* GlyphsCore.framework */,
+				11111111111111111111001D /* GlyphsApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -235,11 +239,11 @@
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Applications/Glyphs 3.app/Contents/Frameworks\"",
+					"\"$(SYSTEM_APPS_DIR)/Glyphs 4.app/Contents/Frameworks\"",
 				);
 				GCC_PREFIX_HEADER = "Risorizer-Cocoa/Risorizer-Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Risorizer-Cocoa/Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 4/Plugins";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Risorizer;
 				PRODUCT_NAME = Risorizer;
 				SKIP_INSTALL = NO;
@@ -255,11 +259,11 @@
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Applications/Glyphs 3.app/Contents/Frameworks\"",
+					"\"$(SYSTEM_APPS_DIR)/Glyphs 4.app/Contents/Frameworks\"",
 				);
 				GCC_PREFIX_HEADER = "Risorizer-Cocoa/Risorizer-Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Risorizer-Cocoa/Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Glyphs 4/Plugins";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.Risorizer;
 				PRODUCT_NAME = Risorizer;
 				SKIP_INSTALL = NO;

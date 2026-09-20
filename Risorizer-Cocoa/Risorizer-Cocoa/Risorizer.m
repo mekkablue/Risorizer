@@ -10,14 +10,10 @@
 
 #import "Risorizer.h"
 
-#import <GlyphsCore/GSFont.h>
-#import <GlyphsCore/GSFontMaster.h>
-#import <GlyphsCore/GSGlyph.h>
-#import <GlyphsCore/GSLayer.h>
-#import <GlyphsCore/GSPath.h>
-#import <GlyphsCore/GSNode.h>
-#import <GlyphsCore/GSCallbackHandler.h>
+// Object model: GlyphsCore. Plug-in/app infrastructure: GlyphsApp (Glyphs 4).
+#import <GlyphsCore/GlyphsCore.h>
 #import <GlyphsCore/GSPathOperator.h>
+#import <GlyphsApp/GSCallbackHandler.h>
 
 #import <math.h>
 
@@ -252,18 +248,33 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
 // GSFilterPlugin subclass
 // ---------------------------------------------------------------------------
 
-@implementation Risorizer
+@implementation Risorizer {
+    // Current parameter values
+    CGFloat   _inset;
+    CGFloat   _density;
+    CGFloat   _size;
+    CGFloat   _minSize;
+    CGFloat   _variance;
+    NSInteger _distribute;
+    BOOL      _subtract;
+
+    // In Glyphs 3, GSFilterPlugin owned the _view ivar and the dialog NIB was
+    // loaded eagerly. In Glyphs 4 the subclass owns it and loads the NIB from
+    // the -view getter on demand, so the ivar is declared here and the XIB
+    // connects its top-level view to the _view outlet.
+    NSView *_view;
+}
 
 @synthesize insetField, densityField, sizeField, minSizeField, subtractField, varianceField, distributeField;
 
 // ---------------------------------------------------------------------------
-// Plugin lifecycle
+// Dialog view — lazily loads the NIB the first time Glyphs asks for it.
 
-- (void)loadPlugin {
-    // Load the dialog NIB; sets the "view" outlet (→ _view) that the
-    // framework checks to decide whether to show the filter dialog.
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    [bundle loadNibNamed:@"Risorizer" owner:self topLevelObjects:nil];
+- (NSView *)view {
+    if (!_view) {
+        [[NSBundle bundleForClass:[self class]] loadNibNamed:@"Risorizer" owner:self topLevelObjects:nil];
+    }
+    return _view;
 }
 
 // ---------------------------------------------------------------------------
@@ -385,20 +396,19 @@ static void RisorizerOffsetLayer(GSLayer *layer, CGFloat offset) {
         GSLayer *layer       = _layers[k];
 
         // Restore paths from shadow (non-destructive preview)
-        layer.shapes = [[[NSMutableArray alloc] initWithArray:shadowLayer.shapes
-                                                    copyItems:YES] mutableCopy];
+        layer.shapes = [[NSMutableArray alloc] initWithArray:shadowLayer.shapes copyItems:YES];
 
         // Restore selection
-        layer.selection = [NSOrderedSet orderedSet];
+        layer.selection = [NSMutableOrderedSet new];
         if (_checkSelection && shadowLayer.selection.count > 0) {
             for (NSUInteger i = 0; i < shadowLayer.shapes.count; i++) {
-                GSPath *shadowPath = (GSPath *)shadowLayer.shapes[i];
-                GSPath *layerPath  = (GSPath *)layer.shapes[i];
+                GSPath *shadowPath = (GSPath *)[shadowLayer objectInShapesAtIndex:i];
                 if (![shadowPath isKindOfClass:[GSPath class]]) continue;
+                GSPath *layerPath = (GSPath *)[layer objectInShapesAtIndex:i];
                 for (NSUInteger j = 0; j < shadowPath.nodes.count; j++) {
-                    GSNode *shadowNode = shadowPath.nodes[j];
+                    GSNode *shadowNode = [shadowPath nodeAtIndex:j];
                     if ([shadowLayer.selection containsObject:shadowNode]) {
-                        [layer addSelection:layerPath.nodes[j]];
+                        [layer addSelection:[layerPath nodeAtIndex:j]];
                     }
                 }
             }
